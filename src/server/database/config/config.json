@@ -4,20 +4,20 @@
     "password": "1111",
     "database": "usersdb",
     "host": "127.0.0.1",
-    "dialect": "posgres"
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "1111",
     "database": "usersdb",
     "host": "127.0.0.1",
-    "dialect": "posgres"
+    "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "1111",
     "database": "usersdb",
     "host": "127.0.0.1",
-    "dialect": "posgres"
+    "dialect": "postgres"
   }
 }
