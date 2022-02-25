@@ -8,14 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "migration:create": "sequelize --migrations-path=./src/server/database/migrations/migrations migration:generate --name",
-    "migration:up": "sequelize --config=./src/server/database/migrations/config.js --migrations-path=./src/server/database/migrations/migrations db:migrate",
-    "migration:down": "sequelize --config=./src/server/database/migrations/config.js --migrations-path=./src/server/database/migrations/migrations db:migrate:undo",
-    "migration:down:all": "sequelize --config=./src/server/database/migrations/config.js --migrations-path=./src/server/database/migrations/migrations db:migrate:undo:all"
+    "migration:up": "sequelize --config=./src/server/database/migrations/config.json --migrations-path=./src/server/database/migrations/migrations db:migrate",
+    "migration:down": "sequelize --config=./src/server/database/migrations/config.json --migrations-path=./src/server/database/migrations/migrations db:migrate:undo",
+    "migration:down:all": "sequelize --config=./src/server/database/migrations/config.json --migrations-path=./src/server/database/migrations/migrations db:migrate:undo:all"
   },
   "dependencies": {
     "dotenv": "^16.0.0",
     "next": "12.1.0",
     "next-connect": "^0.12.2",
+    "pg": "^8.7.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "sequelize": "^6.16.2",

@@ -9,7 +9,8 @@ const handler = nc({
 })
   .get(async (req, res) => {
     try {
-      const result = await res.status(200).json(userService.getAll())
+      const getAllusers = await userService.getAll()
+      const result = res.status(200).json(getAllusers)
     } catch (error) {
       console.log(error);
       res.status(500).json(error)
