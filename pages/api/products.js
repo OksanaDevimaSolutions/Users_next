@@ -30,6 +30,7 @@ const handler = nc({
       });
       const result = await res.status(200).json(productService.createProduct(productTitle, productPrice, productUserId));
     } catch (error) {
+      console.log(error);
       res.status(500).json(error)
     }
   })

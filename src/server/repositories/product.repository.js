@@ -3,10 +3,17 @@ import Product from '../models/Product.models'
 
 
 export const getOneById =async (id) => {
-    return Product.find((item) => item.id == id)
+    //return Product.find((item) => item.id == id)
+    const product= await Product.findAll({
+        where: {
+            id: id
+          }
+    })
+    return product
 }
 export const getAll = async () => { 
-     const products = await sequelize.query('SELECT * FROM products')    
+    // const products = await sequelize.query('SELECT * FROM products')    
+     const products = await Product.findAll()    
      return products[0]
 }
 

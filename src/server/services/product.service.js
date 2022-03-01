@@ -13,7 +13,7 @@ export const findByIdAndDelete=(id)=>{
     return productRepo.findByIdAndDelete(id)
 }
 export const createProduct=(title,price,user_id)=>{
-    return productRepo.createUser(title,price,user_id)
+    return productRepo.createProduct(title,price,user_id)
 }
 
 

@@ -1,6 +1,7 @@
 import sequelize from '../database/connection'
 import {DataTypes} from 'sequelize'
-//const {DataTypes} = require('sequelize')
+import User from './User.models'
+
 
 
     const Product = sequelize.define('Product', {
@@ -24,7 +25,7 @@ import {DataTypes} from 'sequelize'
             // This is the column name of the referenced model
             key: 'id',      
             // With PostgreSQL, it is optionally possible to declare when to check the foreign key constraint, passing the Deferrable type.
-            deferrable: Deferrable.INITIALLY_IMMEDIATE
+        //    deferrable: Deferrable.INITIALLY_IMMEDIATE
             // Options:
             // - `Deferrable.INITIALLY_IMMEDIATE` - Immediately check the foreign key constraints
             // - `Deferrable.INITIALLY_DEFERRED` - Defer all foreign key constraint check to the end of a transaction
