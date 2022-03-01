@@ -25,7 +25,7 @@ module.exports = {
           },
           key: 'id'
         },
-        allowNull: false
+       // allowNull: false
       }
     });
 
