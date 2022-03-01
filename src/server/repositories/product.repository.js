@@ -3,7 +3,7 @@ import Product from '../models/Product.models'
 
 
 export const getOneById =async (id) => {
-    return products.find((item) => item.id == id)
+    return Product.find((item) => item.id == id)
 }
 export const getAll = async () => { 
      const products = await sequelize.query('SELECT * FROM products')    
