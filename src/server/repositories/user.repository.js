@@ -19,7 +19,11 @@ import User from '../models/User.models'
 //     }
 // ]
 export const getOneById =async (id) => {
-    return users.find((item) => item.id == id)
+    return User.findAll({
+        where:{
+            id:id
+        }
+    })
 }
 export const getAll = async () => {
     // User.init({
@@ -43,9 +47,9 @@ export const getAll = async () => {
     //     modelName: 'User' // We need to choose the model name
     //   });
     // const jane = await User.create({ name: "Jane", age: 12 });
-     const users2 = await sequelize.query('SELECT * FROM users')
+     const users = await FindAll()
     // // const users2= await sequelize.findAll()
-     return users2[0]
+     return users[0]
   //  return jane;
 }
 
