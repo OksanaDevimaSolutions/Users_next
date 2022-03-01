@@ -43,7 +43,7 @@ export const getAll = async () => {
     //     modelName: 'User' // We need to choose the model name
     //   });
     // const jane = await User.create({ name: "Jane", age: 12 });
-     const users2 = await sequelize.query('SELECT * FROM users')
+     const users2 = await sequelize.query('SELECT * FROM users INNER JOIN products ON products.user_id=users.id')
     // // const users2= await sequelize.findAll()
      return users2[0]
   //  return jane;

@@ -18,6 +18,13 @@ export default function Index() {
           </Link>
         </li>
       ))}
+      {data.map((product) => (
+        <li key={product.id}>
+          <Link href="/products/[id]" as={`/products/${product.id}`}>
+            <a>{`Product ${product.id}`}</a>
+          </Link>
+        </li>
+      ))}
     </ul>
   )
 }
