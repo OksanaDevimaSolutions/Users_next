@@ -10,7 +10,7 @@ const handler = nc({
   .get(async (req, res) => {
     try {
       const getAllusers = await userService.getAll()
-      const result = res.status(200).json(getAllusers)
+      res.status(200).json(getAllusers)
     } catch (error) {
       console.log(error);
       res.status(500).json(error)
@@ -24,7 +24,7 @@ const handler = nc({
         name: userName,
         age: userAge
       });
-      const result = await res.status(200).json(userService.createUser(userName, userAge));
+     await res.status(200).json(userService.createUser(userName, userAge));
     } catch (error) {
       res.status(500).json(error)
     }
