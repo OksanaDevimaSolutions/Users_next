@@ -30,22 +30,22 @@ export const getOneById =async (id) => {
 }
 export const getAll = async () => {
     
-     // const users = await sequelize.query('SELECT users.id, name, age, products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
+      const users = await sequelize.query('SELECT users.id, name, age, products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
     
-const users = await User.findAll({
-    include: [
-        {
-            model: Product,
-            on: {
-                col1: sequelize.where(sequelize.col("users.id"), "=", sequelize.col("products.user_id"))
-            },
-            attributes: [] // empty array means that no column from ModelB will be returned
-        }
-    ]
-}).then((modelAInstances) => {
-    console.log(modelAInstances);
-    // result...
-});
+// const users = await User.findAll({
+//     include: [
+//         {
+//             model: Product,
+//             on: {
+//                 col1: sequelize.where(sequelize.col("users.id"), "=", sequelize.col("products.user_id"))
+//             },
+//             attributes: [] // empty array means that no column from ModelB will be returned
+//         }
+//     ]
+// }).then((modelAInstances) => {
+//     console.log(modelAInstances);
+//     // result...
+// });
 
 // const users= await User.findAll({
    
@@ -56,9 +56,8 @@ const users = await User.findAll({
 //         attributes:['name', 'age']
 //     }
 // })
-console.log(users[0]);
+console.log(users[0])
      return users[0]
-  //  return jane;
 }
 
 export const findByIdAndUpdate = async (id, name, age) => {
