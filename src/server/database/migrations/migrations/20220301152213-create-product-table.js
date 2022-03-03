@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.DataTypes.FLOAT
         // allowNull defaults to true
       },
-      userId: {
+      user_id: {
         field: 'user_id',
         type: Sequelize.DataTypes.INTEGER,
         references: {

@@ -1,5 +1,6 @@
 import sequelize from '../database/connection'
 import User from '../models/User.models'
+import Product from '../models/Product.models'
 
 // const users = [
 //     {
@@ -19,37 +20,43 @@ import User from '../models/User.models'
 //     }
 // ]
 export const getOneById =async (id) => {
-    //return User.find((item) => item.id == id)
-    return User.findAll({
+   // return User.find((item) => item.id == id)
+    return await User.findAll({
         where: {
           id: id
         }
       })
+
 }
 export const getAll = async () => {
-    // User.init({
-    //     // Model attributes are defined here
-    //     id: {
-    //       type: DataTypes.INTEGER,
-    //       autoIncrement: true,
-    //       primaryKey: true
-    //     },
-    //     name: {
-    //       type: DataTypes.STRING,
-    //       allowNull: false
-    //     },
-    //     age: {
-    //       type: DataTypes.INTEGER
-    //       // allowNull defaults to true
-    //     }
-    //   }, {
-    //     // Other model options go here
-    //     sequelize, // We need to pass the connection instance
-    //     modelName: 'User' // We need to choose the model name
-    //   });
-    // const jane = await User.create({ name: "Jane", age: 12 });
-     const users = await sequelize.query('SELECT users.id, name, age, products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
-    // // const users2= await sequelize.findAll()
+    
+     // const users = await sequelize.query('SELECT users.id, name, age, products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
+    
+const users = await User.findAll({
+    include: [
+        {
+            model: Product,
+            on: {
+                col1: sequelize.where(sequelize.col("users.id"), "=", sequelize.col("products.user_id"))
+            },
+            attributes: [] // empty array means that no column from ModelB will be returned
+        }
+    ]
+}).then((modelAInstances) => {
+    console.log(modelAInstances);
+    // result...
+});
+
+// const users= await User.findAll({
+   
+//     attributes: ['title', 'price', 'user_id']
+//     ,
+//     include: {
+//         model: Product,
+//         attributes:['name', 'age']
+//     }
+// })
+console.log(users[0]);
      return users[0]
   //  return jane;
 }
@@ -93,6 +100,7 @@ export const createUser = async (name, age) => {
     const newUser = await User.create({ name: name, age: age });
     //users.push({id:users.length+1,name:name,age:age})
     //return users.find((item)=>item.id==users.length)
+    console.log(newUser.id);
     return newUser.id
 }
 const userRepository = { getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createUser }

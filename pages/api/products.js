@@ -12,7 +12,6 @@ const handler = nc({
       const getAllproducts = await productService.getAll()
       const result = res.status(200).json(getAllproducts)
     } catch (error) {
-      console.log(error);
       res.status(500).json(error)
     }
   })
@@ -28,7 +27,7 @@ const handler = nc({
       await validationSchema.schemaId.validate({
         user_id: productUserId
       });
-      const result = await res.status(200).json(productService.createProduct(productTitle, productPrice, productUserId));
+ await res.status(200).json(productService.createProduct(productTitle, productPrice, productUserId));
     } catch (error) {
       console.log(error);
       res.status(500).json(error)

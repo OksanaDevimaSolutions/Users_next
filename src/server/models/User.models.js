@@ -1,5 +1,6 @@
 import sequelize from '../database/connection'
 import {DataTypes} from 'sequelize'
+import Product from './Product.models'
 //const {DataTypes} = require('sequelize')
 
 
@@ -27,10 +28,11 @@ import {DataTypes} from 'sequelize'
       // `sequelize.define` also returns the model
       //console.log(User === sequelize.models.User); // true
       
-      //User.sync()
+     // User.sync()
         //  sequelize.sync({ force: true });
+      //  User.hasMany(Product, {foreignKey: 'user_id'})
        // console.log("All models were synchronized successfully.");
-
+      // Product.belongsTo(User)
 
 export default User;
 
