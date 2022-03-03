@@ -30,9 +30,9 @@ import Product from './Product.models'
       
      // User.sync()
         //  sequelize.sync({ force: true });
-      //  User.hasMany(Product, {foreignKey: 'user_id'})
+        User.hasMany(Product, {foreignKey: 'user_id'})
        // console.log("All models were synchronized successfully.");
-      // Product.belongsTo(User)
+       Product.belongsTo(User, {foreignKey: 'user_id'})
 
 export default User;
 
