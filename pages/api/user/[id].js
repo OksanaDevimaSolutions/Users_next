@@ -1,9 +1,8 @@
 import userService from '../../../src/server/services/user.service'
 import validationSchema from '../../../src/server/validations/users.validation.js'
-
-
-
 import nc from "next-connect";
+
+
 //console.log("hello from api.user.id");
 const handler = nc({
 })
@@ -11,7 +10,7 @@ const handler = nc({
     try {
       const { id } = await validationSchema.schemaId.validate(req.query);
       
-      const result = await res.status(200).json(userService.getOneById(id))
+   res.status(200).json(userService.getOneById(id))
       
     } catch (error) {
       console.log(error);
@@ -23,7 +22,7 @@ const handler = nc({
       //const id = req.query.id;
       //await  validationSchema.schemaId.validate(id);
       const { id } = await validationSchema.schemaId.validate(req.query);
-      await res.status(200).json(userService.findByIdAndDelete(id));
+      res.status(200).json(userService.findByIdAndDelete(id));
     } catch (error) {
       res.status(500).json(error)
     }
@@ -40,7 +39,7 @@ const handler = nc({
         age: userAge
       });
 
-      const result = await res.status(200).json(userService.findByIdAndUpdate(id, userName, userAge));
+      await res.status(200).json(userService.findByIdAndUpdate(id, userName, userAge));
 
     } catch (error) {
       res.status(500).json(error)

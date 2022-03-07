@@ -1,6 +1,6 @@
 import sequelize from '../database/connection'
 import {DataTypes} from 'sequelize'
-//import User from './User.models'
+import User from './User.models'
 
 
 
@@ -16,15 +16,15 @@ import {DataTypes} from 'sequelize'
         },
         price: {
           type: DataTypes.FLOAT        
-        // },
-        // user_id: {
-        //   type: DataTypes.INTEGER,
-        //   references: {
-        //     // This is a reference to another model
-        //     model: User,      
-        //     // This is the column name of the referenced model
-        //     key: 'id'
-        //   }
+        },
+        user_id: {
+          type: DataTypes.INTEGER,
+          references: {
+            // This is a reference to another model
+            model: User,      
+            // This is the column name of the referenced model
+            key: 'id'
+          }
         }
       }, {
         // Other model options go here
@@ -39,6 +39,9 @@ import {DataTypes} from 'sequelize'
         //  sequelize.sync({ force: true });
        // console.log("All models were synchronized successfully.");
 
+       User.hasMany(Product, {foreignKey: 'user_id'})
+       // console.log("All models were synchronized successfully.");
+       Product.belongsTo(User, {foreignKey: 'user_id'})
 
 export default Product;
 

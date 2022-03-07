@@ -39,9 +39,9 @@ const users= await User.findAll({
         model: Product,
         attributes:['title', 'price']
     }
-})
-console.log(users[0])
-     return users[0]
+});
+
+     return users;
 }
 
 export const findByIdAndUpdate = async (id, name, age) => {
@@ -51,9 +51,12 @@ export const findByIdAndUpdate = async (id, name, age) => {
             id: id
         }
     });
-    if (countUpdated > 0)
-    return true
-return false
+
+    if (countUpdated > 0){
+      return true;
+    }
+   
+return false;
 
     // const index= users.findIndex((item=>item.id==id))
     // if (index!=-1){
@@ -74,16 +77,19 @@ export const findByIdAndDelete =async (id) => {
             id: id
         }
     });
-    if (countDeleted > 0)
-        return true
-    return false
+
+    if (countDeleted > 0){
+      return true;
+    }
+        
+    return false;
 
 }
 export const createUser = async (name, age) => {
     const newUser = await User.create({ name: name, age: age });
     //users.push({id:users.length+1,name:name,age:age})
     //return users.find((item)=>item.id==users.length)
-    console.log(newUser.id);
+    
     return newUser.id
 }
 const userRepository = { getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createUser }
