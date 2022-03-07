@@ -20,6 +20,7 @@ import Product from '../models/Product.models'
 //     }
 // ]
 export const getOneById =async (id) => {
+
    // return User.find((item) => item.id == id)
     return await User.findAll({
         where: {
@@ -39,10 +40,12 @@ const users= await User.findAll({
         model: Product,
         attributes:['title', 'price']
     }
-});
+})
+console.log(users[0])
+     return users[0]
 
-     return users;
 }
+
 
 export const findByIdAndUpdate = async (id, name, age) => {
 

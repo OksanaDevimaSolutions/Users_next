@@ -10,7 +10,6 @@ const handler = nc({
     try {
       const getAllusers = await userService.getAll()
       res.status(200).json(getAllusers)
-      console.log(getAllusers);
     } catch (error) {
       res.status(500).json(error)
     }
