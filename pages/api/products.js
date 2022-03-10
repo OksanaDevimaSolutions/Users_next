@@ -1,17 +1,16 @@
-import productService from '../../src/server/services/product.service'
-import validationSchema from '../../src/server/validations/products.validation'
-import nc from "next-connect";
+import nc from 'next-connect';
+import productService from '../../src/server/services/product.service';
+import validationSchema from '../../src/server/validations/products.validation';
 
-
-//console.log("hello from api.user.id");
+// console.log("hello from api.user.id");
 const handler = nc({
 })
   .get(async (req, res) => {
     try {
-      const getAllproducts = await productService.getAll()
-      res.status(200).json(getAllproducts)
+      const getAllproducts = await productService.getAll();
+      res.status(200).json(getAllproducts);
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error);
     }
   })
   .post(async (req, res) => {
@@ -22,16 +21,17 @@ const handler = nc({
 
       await validationSchema.schemaProductEdit.validate({
         title: productTitle,
-        price: productPrice
+        price: productPrice,
       });
 
       await validationSchema.schemaId.validate({
-        user_id: productUserId
+        user_id: productUserId,
       });
 
-      await res.status(200).json(productService.createProduct(productTitle, productPrice, productUserId));
+      await res.status(200)
+        .json(productService.createProduct(productTitle, productPrice, productUserId));
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error);
     }
-  })
+  });
 export default handler;

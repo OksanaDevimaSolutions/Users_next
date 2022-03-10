@@ -1,17 +1,16 @@
-import userService from '../../src/server/services/user.service'
-import validationSchema from '../../src/server/validations/users.validation.js'
-import nc from "next-connect";
+import nc from 'next-connect';
+import userService from '../../src/server/services/user.service';
+import validationSchema from '../../src/server/validations/users.validation';
 
-
-//console.log("hello from api.user.id");
+// console.log("hello from api.user.id");
 const handler = nc({
 })
   .get(async (req, res) => {
     try {
-      const getAllusers = await userService.getAll()
-      res.status(200).json(getAllusers)
+      const getAllusers = await userService.getAll();
+      res.status(200).json(getAllusers);
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error);
     }
   })
   .post(async (req, res) => {
@@ -20,11 +19,12 @@ const handler = nc({
       const userAge = req.body.age;
       await validationSchema.schemaUserEdit.validate({
         name: userName,
-        age: userAge
+        age: userAge,
       });
       res.status(200).json(userService.createUser(userName, userAge));
     } catch (error) {
-      res.status(500).json(error)
+      res.status(500).json(error);
     }
-  })
+  });
+
 export default handler;
