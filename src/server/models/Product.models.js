@@ -1,47 +1,37 @@
-import sequelize from '../database/connection'
-import {DataTypes} from 'sequelize'
-import User from './User.models'
+import { DataTypes } from 'sequelize';
+import sequelize from '../database/connection';
+import User from './User.models';
 
+const Product = sequelize.define('Product', {
+  // Model attributes are defined here
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  title: {
+    type: DataTypes.STRING,
+  },
+  price: {
+    type: DataTypes.FLOAT,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    field: 'user_id',
+    references: {
+      // This is a reference to another model
+      model: User,
+      // This is the column name of the referenced model
+      key: 'id',
+    },
+  },
+}, {
+  // Other model options go here
+  tableName: 'products',
+  timestamps: false,
+});
 
-
-    const Product = sequelize.define('Product', {
-        // Model attributes are defined here
-        id: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-          primaryKey: true
-        },
-        title: {
-          type: DataTypes.STRING        
-        },
-        price: {
-          type: DataTypes.FLOAT        
-        },
-        user_id: {
-          type: DataTypes.INTEGER,
-          references: {
-            // This is a reference to another model
-            model: User,      
-            // This is the column name of the referenced model
-            key: 'id'
-          }
-        }
-      }, {
-        // Other model options go here
-        tableName: 'products',
-        timestamps: false
-      });
-      
-      // `sequelize.define` also returns the model
-      //console.log(User === sequelize.models.User); // true
-      
-      //User.sync()
-        //  sequelize.sync({ force: true });
-       // console.log("All models were synchronized successfully.");
-
-       User.hasMany(Product, {foreignKey: 'user_id'})
-       // console.log("All models were synchronized successfully.");
-       Product.belongsTo(User, {foreignKey: 'user_id'})
+User.hasMany(Product, { foreignKey: 'userId' });
+Product.belongsTo(User, { foreignKey: 'userId' });
 
 export default Product;
-

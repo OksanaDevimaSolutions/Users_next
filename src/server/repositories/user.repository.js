@@ -1,6 +1,6 @@
-import sequelize from '../database/connection'
-import User from '../models/User.models'
-import Product from '../models/Product.models'
+// import sequelize from '../database/connection';
+import User from '../models/User.models';
+import Product from '../models/Product.models';
 
 // const users = [
 //     {
@@ -19,82 +19,76 @@ import Product from '../models/Product.models'
 //         age: 45
 //     }
 // ]
-export const getOneById =async (id) => {
-
-   // return User.find((item) => item.id == id)
-    return await User.findAll({
-        where: {
-          id: id
-        }
-      })
-
-}
+export const getOneById = (id) => User.findAll({
+  where: {
+    id,
+  },
+});
 export const getAll = async () => {
-    
-    //  const users = await sequelize.query('SELECT users.id, name, age, products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
-    
-const users= await User.findAll({
-   
-    attributes: ['id','name', 'age'],
+  //  const users = await sequelize.query('SELECT users.id, name, age,
+  // products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
+
+  const users = await User.findAll({
+
+    attributes: ['id', 'name', 'age'],
     include: {
-        model: Product,
-        attributes:['title', 'price']
-    }
-})
-console.log(users[0])
-     return users[0]
-
-}
-
+      model: Product,
+      attributes: ['title', 'price'],
+    },
+  });
+  // console.log(users[0])
+  return users;
+};
 
 export const findByIdAndUpdate = async (id, name, age) => {
+  const countUpdated = await User.update({ name, age }, {
+    where: {
+      id,
+    },
+  });
 
-    const countUpdated = await User.update({ name: name, age:age }, {
-        where: {
-            id: id
-        }
-    });
+  if (countUpdated > 0) {
+    return true;
+  }
 
-    if (countUpdated > 0){
-      return true;
-    }
-   
-return false;
+  return false;
 
-    // const index= users.findIndex((item=>item.id==id))
-    // if (index!=-1){
-    //     users.splice(index,1, {id:id, name:name,age:age})
-    //     return users
-    // }
-    // return false
-}
-export const findByIdAndDelete =async (id) => {
-    // const index= users.findIndex((item=>item.id==id))
-    // if (index!=-1){
-    //     users.splice(index,1)
-    //     return true
-    // }
-    // return false
-    const countDeleted = await User.destroy({
-        where: {
-            id: id
-        }
-    });
+  // const index= users.findIndex((item=>item.id==id))
+  // if (index!=-1){
+  //     users.splice(index,1, {id:id, name:name,age:age})
+  //     return users
+  // }
+  // return false
+};
 
-    if (countDeleted > 0){
-      return true;
-    }
-        
-    return false;
+export const findByIdAndDelete = async (id) => {
+  // const index= users.findIndex((item=>item.id==id))
+  // if (index!=-1){
+  //     users.splice(index,1)
+  //     return true
+  // }
+  // return false
+  const countDeleted = await User.destroy({
+    where: {
+      id,
+    },
+  });
 
-}
+  if (countDeleted > 0) {
+    return true;
+  }
+
+  return false;
+};
 export const createUser = async (name, age) => {
-    const newUser = await User.create({ name: name, age: age });
-    //users.push({id:users.length+1,name:name,age:age})
-    //return users.find((item)=>item.id==users.length)
-    
-    return newUser.id
-}
-const userRepository = { getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createUser }
+  const newUser = await User.create({ name, age });
+  // users.push({id:users.length+1,name:name,age:age})
+  // return users.find((item)=>item.id==users.length)
 
-export default userRepository
+  return newUser.id;
+};
+const userRepository = {
+  getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createUser,
+};
+
+export default userRepository;
