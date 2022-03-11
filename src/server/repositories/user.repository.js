@@ -37,7 +37,7 @@ export const getAll = async () => {
     },
   });
   // console.log(users[0])
-  return users[0];
+  return users;
 };
 
 export const findByIdAndUpdate = async (id, name, age) => {

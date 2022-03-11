@@ -21,7 +21,8 @@ const handler = nc({
         name: userName,
         age: userAge,
       });
-      res.status(200).json(userService.createUser(userName, userAge));
+      const result = await userService.createUser(userName, userAge);
+      res.status(200).json(result);
     } catch (error) {
       res.status(500).json(error);
     }

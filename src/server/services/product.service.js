@@ -1,6 +1,6 @@
 import productRepo from '../repositories/product.repository';
 
-export const getOneById = (id) => productRepo.getOneById(id);
+export const getOneById = async (id) => await productRepo.getOneById(id);
 export const getAll = () => productRepo.getAll();
 export const findByIdAndUpdate = (id, title, price, userId) => {
   productRepo.findByIdAndUpdate(id, title, price, userId);

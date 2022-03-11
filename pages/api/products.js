@@ -25,11 +25,11 @@ const handler = nc({
       });
 
       await validationSchema.schemaId.validate({
-        user_id: productUserId,
+        userId: productUserId,
       });
 
-      await res.status(200)
-        .json(productService.createProduct(productTitle, productPrice, productUserId));
+      const result = await productService.createProduct(productTitle, productPrice, productUserId);
+      res.status(200).json(result);
     } catch (error) {
       res.status(500).json(error);
     }

@@ -23,7 +23,7 @@ export const findByIdAndUpdate = async (id, title, price, userId) => {
     },
   });
 
-  // console.log(countUpdated);
+  // console.log(title, price, userId);
 
   if (countUpdated > 0) {
     return true;

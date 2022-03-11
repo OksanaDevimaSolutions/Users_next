@@ -6,7 +6,7 @@ export const schemaId = yup.object().shape({
 export const schemaProductEdit = yup.object().shape({
   title: yup.string().min(2).max(255),
   price: yup.number().positive(),
-  user_id: yup.number().positive().integer(),
+  userId: yup.number().positive().integer(),
 });
 
 const yupValidation = { schemaId, schemaProductEdit };

@@ -15,8 +15,9 @@ const Product = sequelize.define('Product', {
   price: {
     type: DataTypes.FLOAT,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
+    field: 'user_id',
     references: {
       // This is a reference to another model
       model: User,
@@ -30,13 +31,7 @@ const Product = sequelize.define('Product', {
   timestamps: false,
 });
 
-// `sequelize.define` also returns the model
-// console.log(User === sequelize.models.User); // true
-//  sequelize.sync({ force: true });
-// console.log("All models were synchronized successfully.");
-
-User.hasMany(Product, { foreignKey: 'user_id' });
-// console.log("All models were synchronized successfully.");
-Product.belongsTo(User, { foreignKey: 'user_id' });
+User.hasMany(Product, { foreignKey: 'userId' });
+Product.belongsTo(User, { foreignKey: 'userId' });
 
 export default Product;
