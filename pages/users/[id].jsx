@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import useSwr from 'swr';
 import React from 'react';
-import fetcher from '../fetcher';
+import fetcher from '../../src/utils/fetcher';
 
 // const fetcher = (url) => fetch(url).then((res) => res.json());
 
