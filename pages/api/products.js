@@ -1,6 +1,11 @@
 import nc from 'next-connect';
 import productService from '../../src/server/services/product.service';
+import logsService from '../../src/server/services/logs.service';
 import validationSchema from '../../src/server/validations/products.validation';
+
+const express = require('express');
+
+const app = express();
 
 // console.log("hello from api.user.id");
 const handler = nc({
@@ -8,6 +13,12 @@ const handler = nc({
   .get(async (req, res) => {
     try {
       const getAllproducts = await productService.getAll();
+
+      const route = req.query;
+      const body = '';
+      const time = Date.now();
+      app.use(logsService.createLogs(route, body, time));
+
       res.status(200).json(getAllproducts);
     } catch (error) {
       res.status(500).json(error);
