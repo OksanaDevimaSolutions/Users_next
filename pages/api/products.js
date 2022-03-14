@@ -40,6 +40,16 @@ const handler = nc({
       });
 
       const result = await productService.createProduct(productTitle, productPrice, productUserId);
+
+      const route = req.query;
+      const body = JSON.stringify({
+        title: productTitle,
+        price: productPrice,
+        userId: productUserId,
+      });
+      const time = Date.now();
+      app.use(logsService.createLogs(route, body, time));
+
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json(error);
