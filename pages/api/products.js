@@ -1,23 +1,15 @@
 import nc from 'next-connect';
 import productService from '../../src/server/services/product.service';
-import logsService from '../../src/server/services/logs.service';
 import validationSchema from '../../src/server/validations/products.validation';
-
-const express = require('express');
-
-const app = express();
+import middlewareLogs from '../../src/server/middlewares/logger.middleware';
 
 // console.log("hello from api.user.id");
 const handler = nc({
 })
+  .use(middlewareLogs)
   .get(async (req, res) => {
     try {
       const getAllproducts = await productService.getAll();
-
-      const route = req.query;
-      const body = '';
-      const time = Date.now();
-      app.use(logsService.createLogs(route, body, time));
 
       res.status(200).json(getAllproducts);
     } catch (error) {
@@ -40,15 +32,6 @@ const handler = nc({
       });
 
       const result = await productService.createProduct(productTitle, productPrice, productUserId);
-
-      const route = req.query;
-      const body = JSON.stringify({
-        title: productTitle,
-        price: productPrice,
-        userId: productUserId,
-      });
-      const time = Date.now();
-      app.use(logsService.createLogs(route, body, time));
 
       res.status(200).json(result);
     } catch (error) {

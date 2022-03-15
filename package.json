@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
     "next": "12.1.0",
     "next-connect": "^0.12.2",
     "pg": "^8.7.3",

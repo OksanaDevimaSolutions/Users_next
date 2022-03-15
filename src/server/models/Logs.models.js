@@ -10,6 +10,9 @@ const Logs = sequelize.define('Log', {
   route: {
     type: DataTypes.STRING,
   },
+  method: {
+    type: DataTypes.STRING,
+  },
   body: {
     type: DataTypes.STRING,
   },

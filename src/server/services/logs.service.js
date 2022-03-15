@@ -1,6 +1,8 @@
 import logsRepo from '../repositories/logs.repository';
 
-export const createLogs = (route, body, time) => logsRepo.createLogs(route, body, time);
+export const createLogs = (route, method, body, time) => {
+  logsRepo.createLogs(route, method, body, time);
+};
 
 const logsService = {
   createLogs,
