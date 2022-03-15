@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../database/connection';
 
-const Logs = sequelize.define('Log', {
+const Log = sequelize.define('Log', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -20,8 +20,8 @@ const Logs = sequelize.define('Log', {
     type: DataTypes.DATE,
   },
 }, {
-  tableName: 'logs',
+  tableName: 'loggs',
   timestamps: false,
 });
 
-export default Logs;
+export default Log;

@@ -1,4 +1,4 @@
-import Log from '../models/Logs.models';
+import Log from '../models/Log.models';
 
 export const createLogs = async (route, method, body, time) => {
   const newLog = await Log.create({
