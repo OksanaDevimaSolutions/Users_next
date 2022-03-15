@@ -1,9 +1,11 @@
 import nc from 'next-connect';
 import productService from '../../../src/server/services/product.service';
 import validationSchema from '../../../src/server/validations/products.validation';
+import middlewareLogs from '../../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
 })
+  .use(middlewareLogs)
   .get(async (req, res) => {
     try {
       const { id } = await validationSchema.schemaId.validate(req.query);

@@ -1,10 +1,12 @@
 import nc from 'next-connect';
 import userService from '../../src/server/services/user.service';
 import validationSchema from '../../src/server/validations/users.validation';
+import middlewareLogs from '../../src/server/middlewares/logger.middleware';
 
 // console.log("hello from api.user.id");
 const handler = nc({
 })
+  .use(middlewareLogs)
   .get(async (req, res) => {
     try {
       const getAllusers = await userService.getAll();
