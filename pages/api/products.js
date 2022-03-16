@@ -1,12 +1,12 @@
 import nc from 'next-connect';
 import productService from '../../src/server/services/product.service';
 import validationSchema from '../../src/server/validations/products.validation';
-import middlewareLogs from '../../src/server/middlewares/logger.middleware';
+import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 // console.log("hello from api.user.id");
 const handler = nc({
 })
-  .use(middlewareLogs)
+  .use(loggerMiddleware)
   .get(async (req, res) => {
     try {
       const getAllproducts = await productService.getAll();

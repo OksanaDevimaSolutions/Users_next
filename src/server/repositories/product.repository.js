@@ -8,11 +8,18 @@ export const getOneById = async (id) => {
       id,
     },
   });
-  return product[0];
+  if (product[0]) {
+    return product[0];
+  }
+  return false;
 };
 export const getAll = async () => {
   // const products = await sequelize.query('SELECT * FROM products')
-  const products = await Product.findAll();
+  const products = await Product.findAll({
+    order: [
+      ['id', 'DESC'],
+    ],
+  });
   return products;
 };
 

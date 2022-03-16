@@ -2,9 +2,12 @@ import logsService from '../services/logs.service';
 
 const loggerMiddleware = (req, res, next) => {
   const route = req.url;
-  const body = JSON.stringify(req.body);
   const time = Date.now();
   const { method } = req;
+  let body;
+  if (method === 'GET' || method === 'DELETE') {
+    body = '';
+  } else body = JSON.stringify(req.body);
 
   logsService.createLogs(route, method, body, time);
 
