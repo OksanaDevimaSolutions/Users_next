@@ -63,7 +63,7 @@ export const createUser = async (email, password, name, age) => {
     email, password, name, age,
   });
 
-  return newUser.id;
+  return newUser;
 };
 export const getAllEmails = async () => {
   const users = await User.findAll({
@@ -83,9 +83,27 @@ export const findEmail = async (email) => {
 
   return false;
 };
+export const addToken = async (id, token) => {
+  const countUpdated = await User.update({ token }, {
+    where: {
+      id,
+    },
+  });
+  if (countUpdated > 0) {
+    return true;
+  }
+  return false;
+};
 
 const userRepository = {
-  getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createUser, getAllEmails, findEmail,
+  getOneById,
+  getAll,
+  findByIdAndUpdate,
+  findByIdAndDelete,
+  createUser,
+  getAllEmails,
+  findEmail,
+  addToken,
 };
 
 export default userRepository;

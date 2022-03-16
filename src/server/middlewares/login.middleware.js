@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 
 const loginMiddleware = (req, res, next) => {
+  // const { email, password } = req.body;
+
   const { token } = req.body.token || req.query.token || req.headers['x-access-token'];
 
   if (!token) {

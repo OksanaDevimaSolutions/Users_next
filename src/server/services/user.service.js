@@ -21,8 +21,8 @@ export const findByIdAndDelete = async (id) => {
   return result;
 };
 export const createUser = async (email, password, name, age) => {
-  const userId = await userRepo.createUser(email, password, name, age);
-  return userId;
+  const user = await userRepo.createUser(email, password, name, age);
+  return user;
 };
 export const getAllEmails = async () => {
   const result = await userRepo.getAllEmails();
@@ -32,9 +32,20 @@ export const findEmail = async (email) => {
   const user = await userRepo.findEmail(email);
   return user;
 };
+export const addToken = async (id, token) => {
+  const result = await userRepo.addToken(id, token);
+  return result;
+};
 
 const userService = {
-  getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createUser, getAllEmails, findEmail,
+  getOneById,
+  getAll,
+  findByIdAndUpdate,
+  findByIdAndDelete,
+  createUser,
+  getAllEmails,
+  findEmail,
+  addToken,
 };
 
 export default userService;

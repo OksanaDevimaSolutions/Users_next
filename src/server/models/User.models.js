@@ -1,4 +1,4 @@
-import { postgresMd5PasswordHash } from 'pg/lib/utils';
+// import { postgresMd5PasswordHash } from 'pg/lib/utils';
 import { DataTypes } from 'sequelize';
 import sequelize from '../database/connection';
 
