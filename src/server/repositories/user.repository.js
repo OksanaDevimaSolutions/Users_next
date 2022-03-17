@@ -7,12 +7,21 @@ export const getOneById = async (id) => {
       id,
     },
     attributes: ['id', 'email', 'name', 'age'],
+    include: {
+      model: Product,
+      attributes: ['id', 'title', 'price'],
+    },
+    order: [
+      ['id', 'DESC'],
+      [Product, 'title', 'ASC'],
+      [Product, 'id', 'ASC'],
+    ],
   });
   if (user[0]) {
     return user[0];
   }
 
-  return false;
+  return null;
 };
 export const getAll = async () => {
   const users = await User.findAll({
@@ -81,7 +90,7 @@ export const findEmail = async (email) => {
     return user[0];
   }
 
-  return false;
+  return null;
 };
 export const addToken = async (id, token) => {
   const countUpdated = await User.update({ token }, {

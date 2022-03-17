@@ -1,15 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-const loginMiddleware = (req, res, next) => {
-  // const { email, password } = req.body;
-
-  const { token } = req.body.token || req.query.token || req.headers['x-access-token'];
+const authMiddleware = (req, res, next) => {
+  const token = req.headers['x-access-token'];
 
   if (!token) {
     return res.status(403).send('A token is required for authentication');
   }
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+
     req.user = decoded;
   } catch (err) {
     return res.status(401).send('Invalid Token');
@@ -17,4 +16,4 @@ const loginMiddleware = (req, res, next) => {
   return next();
 };
 
-export default loginMiddleware;
+export default authMiddleware;

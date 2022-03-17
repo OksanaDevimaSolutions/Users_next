@@ -1,20 +1,10 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import loginMiddleware from '../../src/server/middlewares/login.middleware';
 import userService from '../../src/server/services/user.service';
 
 const handler = nc({
 })
-  .use(loginMiddleware)
-//   .get(async (req, res) => {
-//     try {
-//       const getAllLogins = await userService.getAllLogins();
-//       res.status(200).json(getAllLogins);
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   })
   .post(async (req, res) => {
     try {
       // Get user input
@@ -22,11 +12,10 @@ const handler = nc({
 
       // Validate user input
       if (!(email && password)) {
-        res.status(400).send('All input is required');
+        res.status(400).json({ message: 'All input is required' });
       }
       // Validate if user exist in our database
-      const user = await await userService.findLogin({ email });
-
+      const user = await userService.findEmail(email);
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
         const token = jwt.sign(
@@ -41,9 +30,10 @@ const handler = nc({
         user.token = token;
 
         // user
+        // here we will return token, user is returned only for testing
         res.status(200).json(user);
       }
-      res.status(400).send('Invalid Credentials');
+      res.status(400).json({ message: 'Invalid Credentials' });
     } catch (err) {
       res.status(500).json(err);
     }

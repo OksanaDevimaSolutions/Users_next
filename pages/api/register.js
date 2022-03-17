@@ -1,13 +1,11 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-// import emailMiddleware from '../../src/server/middlewares/email.middleware';
 import validationSchema from '../../src/server/validations/users.validation';
 import userService from '../../src/server/services/user.service';
 
 const handler = nc({
 })
-// .use(loginMiddleware)
 //   .get(async (req, res) => {
 //     try {
 //       const getAllLogins = await userService.getAllLogins();
@@ -28,14 +26,14 @@ const handler = nc({
       });
       // // Validate user input
       if (!(email && password && name && age)) {
-        res.status(400).send('All input is required');
+        res.status(400).json({ message: 'All input is required' });
       }
 
       // check if user already exist
       // Validate if user exist in our database
       const oldUser = await userService.findEmail(email);
       if (oldUser) {
-        return res.status(409).send('User Already Exist. Please Login');
+        return res.status(409).json({ message: 'User Already Exist. Please Login' });
       }
       // Encrypt user password
       const encryptedPassword = await bcrypt.hash(password, 10);
@@ -52,15 +50,15 @@ const handler = nc({
         },
       );
       // save user token
-      user.token = token;
-      const result = await userService.addToken(user.id, token);
+      // user.token = token;
+      //  const result = await userService.addToken(user.id, token);
 
-      res.status(201).json(result);
+      res.status(201).json({ token });
     } catch (err) {
       res.status(500).json(err);
     }
     // Our register logic ends here
-    return 'user registered!';
+    return res.status(200).json({ message: 'user registered!' });
   });
 
 export default handler;
