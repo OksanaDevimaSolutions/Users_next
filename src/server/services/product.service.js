@@ -1,17 +1,12 @@
 import productRepo from '../repositories/product.repository';
 
-// функція повертає 1 продукт або пусту стрічку якщо такого продукту немає
 export const getOneById = async (id) => {
   const product = await productRepo.getOneById(id);
   return product;
 };
 export const getAll = async () => {
-  try {
-    const result = await productRepo.getAll();
-    return result;
-  } catch (err) {
-    return `Can't get products:\n "${err.message}"`;
-  }
+  const result = await productRepo.getAll();
+  return result;
 };
 export const findByIdAndUpdate = (id, title, price, userId) => {
   const result = productRepo.findByIdAndUpdate(id, title, price, userId);

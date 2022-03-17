@@ -11,7 +11,7 @@ export const getOneById = async (id) => {
   if (product[0]) {
     return product[0];
   }
-  return false;
+  return null;
 };
 export const getAll = async () => {
   // const products = await sequelize.query('SELECT * FROM products')
