@@ -29,7 +29,6 @@ const handler = nc({
         // save user token
         user.token = token;
 
-        // user
         // here we will return token, user is returned only for testing
         res.status(200).json(user);
       }
@@ -37,7 +36,6 @@ const handler = nc({
     } catch (err) {
       res.status(500).json(err);
     }
-    // Our register logic ends here
   });
 
 export default handler;

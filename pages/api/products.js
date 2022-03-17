@@ -4,14 +4,12 @@ import validationSchema from '../../src/server/validations/products.validation';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 import authMiddleware from '../../src/server/middlewares/auth.middleware';
 
-// console.log("hello from api.user.id");
 const handler = nc({
 })
   .use(loggerMiddleware)
   .use(authMiddleware)
   .get(async (req, res) => {
     try {
-      // передати тільки для одного юзера
       const getAllproducts = await productService.getAll(req.user.userId);
 
       res.status(200).json(getAllproducts);
