@@ -3,9 +3,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import validationSchema from '../../src/server/validations/users.validation';
 import userService from '../../src/server/services/user.service';
+import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
 })
+  .use(loggerMiddleware)
 //   .get(async (req, res) => {
 //     try {
 //       const getAllLogins = await userService.getAllLogins();

@@ -4,7 +4,6 @@ import validationSchema from '../../../src/server/validations/users.validation';
 import loggerMiddleware from '../../../src/server/middlewares/logger.middleware';
 import authMiddleware from '../../../src/server/middlewares/auth.middleware';
 
-// console.log("hello from api.user.id");
 const handler = nc({
 })
   .use(loggerMiddleware)

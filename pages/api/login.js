@@ -2,9 +2,11 @@ import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import userService from '../../src/server/services/user.service';
+import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
 })
+  .use(loggerMiddleware)
   .post(async (req, res) => {
     try {
       // Get user input
@@ -26,11 +28,7 @@ const handler = nc({
           },
         );
 
-        // save user token
-        user.token = token;
-
-        // here we will return token, user is returned only for testing
-        res.status(200).json(user);
+        res.status(200).json({ token });
       }
       res.status(400).json({ message: 'Invalid Credentials' });
     } catch (err) {
