@@ -23,13 +23,9 @@ const handler = nc({
         email, password, name, age,
       } = req.body;
 
-      validationSchema.schemaEmail.validate({ email })
+      await validationSchema.schemaEmailPassword.validate({ email, password })
         .catch((err) => res.status(400).json(err.errors));
-      validationSchema.schemaPassword.validate({ password })
-        .catch((err) => res.status(400).json(err.errors));
-      validationSchema.schemaUserName.validate({ name })
-        .catch((err) => res.status(400).json(err.errors));
-      validationSchema.schemaUserAge.validate({ age })
+      await validationSchema.schemaUserEdit.validate({ name, age })
         .catch((err) => res.status(400).json(err.errors));
 
       // check if user already exist

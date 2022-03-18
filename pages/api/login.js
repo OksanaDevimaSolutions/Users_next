@@ -13,12 +13,10 @@ const handler = nc({
       // Get user input
       const { email, password } = req.body;
 
-      validationSchema.schemaEmail.validate({ email }).catch((err) => {
+      await validationSchema.schemaEmailPassword.validate({ email, password }).catch((err) => {
         res.status(400).json(err.name, err.errors);
       });
-      validationSchema.schemaPassword.validate({ password }).catch((err) => {
-        res.status(400).json(err.name, err.errors);
-      });
+
       // Validate if user exist in our database
       const user = await userService.findEmail(email);
 
