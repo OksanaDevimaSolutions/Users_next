@@ -1,19 +1,21 @@
 import productRepo from '../repositories/product.repository';
 
-export const getOneById = async (id) => {
-  const product = await productRepo.getOneById(id);
+// function returns 1 product or an empty strin if that kind of product is absent
+export const getOneById = async (id, userId) => {
+  const product = await productRepo.getOneById(id, userId);
   return product;
 };
-export const getAll = async () => {
-  const result = await productRepo.getAll();
+export const getAll = async (userId) => {
+  const result = await productRepo.getAll(userId);
+
   return result;
 };
 export const findByIdAndUpdate = (id, title, price, userId) => {
   const result = productRepo.findByIdAndUpdate(id, title, price, userId);
   return result;
 };
-export const findByIdAndDelete = async (id) => {
-  const result = await productRepo.findByIdAndDelete(id);
+export const findByIdAndDelete = async (id, userId) => {
+  const result = await productRepo.findByIdAndDelete(id, userId);
   return result;
 };
 export const createProduct = async (title, price, userId) => {
