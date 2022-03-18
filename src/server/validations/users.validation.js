@@ -17,13 +17,16 @@ export const schemaUserEdit = yup.object().shape({
   age: yup.number().integer().positive().min(18, 'Minimum age is 18')
     .max(100),
 });
-export const schemaEmailPassword = yup.object().shape({
+export const schemaUserValidation = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().required(),
+  name: yup.string().min(3),
+  age: yup.number().integer().positive().min(18, 'Minimum age is 18')
+    .max(100),
 });
 
 const yupValidation = {
-  schemaId, schemaUserEdit, schemaEmailPassword,
+  schemaId, schemaUserEdit, schemaUserValidation,
 };
 
 export default yupValidation;

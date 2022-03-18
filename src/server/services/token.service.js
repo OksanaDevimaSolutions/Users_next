@@ -12,4 +12,5 @@ export const createToken = async (user) => {
   return result;
 };
 
-export default createToken;
+const tokenService = { createToken };
+export default tokenService;

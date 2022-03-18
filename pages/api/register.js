@@ -2,7 +2,7 @@ import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import validationSchema from '../../src/server/validations/users.validation';
 import userService from '../../src/server/services/user.service';
-import createToken from '../../src/server/services/token.service';
+import { createToken } from '../../src/server/services/token.service';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
@@ -23,9 +23,9 @@ const handler = nc({
         email, password, name, age,
       } = req.body;
 
-      await validationSchema.schemaEmailPassword.validate({ email, password })
-        .catch((err) => res.status(400).json(err.errors));
-      await validationSchema.schemaUserEdit.validate({ name, age })
+      await validationSchema.schemaUserValidation.validate({
+        name, age, email, password,
+      })
         .catch((err) => res.status(400).json(err.errors));
 
       // check if user already exist

@@ -1,7 +1,7 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import userService from '../../src/server/services/user.service';
-import createToken from '../../src/server/services/token.service';
+import { createToken } from '../../src/server/services/token.service';
 import validationSchema from '../../src/server/validations/users.validation';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
@@ -13,7 +13,7 @@ const handler = nc({
       // Get user input
       const { email, password } = req.body;
 
-      await validationSchema.schemaEmailPassword.validate({ email, password }).catch((err) => {
+      await validationSchema.schemaUserValidation.validate({ email, password }).catch((err) => {
         res.status(400).json(err.name, err.errors);
       });
 
