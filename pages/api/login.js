@@ -13,7 +13,7 @@ const handler = nc({
       // Get user input
       const { email, password } = req.body;
 
-      await validationSchema.schemaUserValidation.validate({ email, password }).catch((err) => {
+      await validationSchema.schemaEmailPassword.validate({ email, password }).catch((err) => {
         res.status(400).json(err.name, err.errors);
       });
 
