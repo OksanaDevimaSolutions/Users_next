@@ -7,6 +7,7 @@ export const getOneById = async (id, userId) => {
 };
 export const getAll = async (userId) => {
   const result = await productRepo.getAll(userId);
+
   return result;
 };
 export const findByIdAndUpdate = (id, title, price, userId) => {
