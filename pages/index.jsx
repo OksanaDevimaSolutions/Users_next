@@ -1,8 +1,7 @@
 import useSwr from 'swr';
 import Link from 'next/link';
 import React from 'react';
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import fetcher from '../src/utils/fetcher';
 
 export default function Index() {
   const { data, error } = useSwr('/api/users', fetcher);

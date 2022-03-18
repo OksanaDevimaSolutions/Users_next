@@ -1,13 +1,16 @@
 import nc from 'next-connect';
 import productService from '../../src/server/services/product.service';
 import validationSchema from '../../src/server/validations/products.validation';
+import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 // console.log("hello from api.user.id");
 const handler = nc({
 })
+  .use(loggerMiddleware)
   .get(async (req, res) => {
     try {
       const getAllproducts = await productService.getAll();
+
       res.status(200).json(getAllproducts);
     } catch (error) {
       res.status(500).json(error);
@@ -29,6 +32,7 @@ const handler = nc({
       });
 
       const result = await productService.createProduct(productTitle, productPrice, productUserId);
+
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json(error);

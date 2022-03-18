@@ -19,22 +19,33 @@ import Product from '../models/Product.models';
 //         age: 45
 //     }
 // ]
-export const getOneById = (id) => User.findAll({
-  where: {
-    id,
-  },
-});
+export const getOneById = async (id) => {
+  const user = await User.findAll({
+    where: {
+      id,
+    },
+  });
+  if (user[0]) {
+    return user[0];
+  }
+
+  return false;
+};
 export const getAll = async () => {
   //  const users = await sequelize.query('SELECT users.id, name, age,
   // products.title, products.price FROM products INNER JOIN users ON products.user_id=users.id')
 
   const users = await User.findAll({
-
     attributes: ['id', 'name', 'age'],
     include: {
       model: Product,
-      attributes: ['title', 'price'],
+      attributes: ['id', 'title', 'price'],
     },
+    order: [
+      ['id', 'DESC'],
+      [Product, 'title', 'ASC'],
+      [Product, 'id', 'ASC'],
+    ],
   });
   // console.log(users[0])
   return users;
