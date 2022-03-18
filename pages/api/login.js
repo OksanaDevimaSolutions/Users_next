@@ -1,7 +1,7 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import userService from '../../src/server/services/user.service';
-import { createToken } from '../../src/server/services/token.service';
+import tokenService from '../../src/server/services/token.service';
 import validationSchema from '../../src/server/validations/users.validation';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
@@ -22,7 +22,7 @@ const handler = nc({
 
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
-        const token = await createToken({ userId: user.id, email });
+        const token = await tokenService.createToken({ userId: user.id, email });
 
         return res.status(200).json({ token });
       }

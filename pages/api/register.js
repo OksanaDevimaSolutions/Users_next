@@ -2,7 +2,7 @@ import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import validationSchema from '../../src/server/validations/users.validation';
 import userService from '../../src/server/services/user.service';
-import { createToken } from '../../src/server/services/token.service';
+import tokenService from '../../src/server/services/token.service';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
@@ -40,7 +40,7 @@ const handler = nc({
       const user = await userService.createUser(email, encryptedPassword, name, age);
 
       // Create token
-      const token = await createToken(user.id, email);
+      const token = await tokenService.createToken(user.id, email);
 
       return res.status(201).json({ message: 'user registered!', token });
     } catch (err) {
