@@ -36,7 +36,6 @@ export const getAll = async () => {
       [Product, 'id', 'ASC'],
     ],
   });
-  // console.log(users[0])
   return users;
 };
 
@@ -98,10 +97,7 @@ export const addToken = async (id, token) => {
       id,
     },
   });
-  if (countUpdated > 0) {
-    return true;
-  }
-  return false;
+  return countUpdated > 0;
 };
 
 const userRepository = {

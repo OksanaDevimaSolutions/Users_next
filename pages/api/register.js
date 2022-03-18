@@ -1,8 +1,8 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import validationSchema from '../../src/server/validations/users.validation';
 import userService from '../../src/server/services/user.service';
+import createToken from '../../src/server/services/token.service';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
@@ -22,17 +22,17 @@ const handler = nc({
       const {
         email, password, name, age,
       } = req.body;
-      await validationSchema.schemaUserEdit.validate({
-        name,
-        age,
-      });
-      // // Validate user input
-      if (!(email && password && name && age)) {
-        res.status(400).json({ message: 'All input is required' });
-      }
+
+      validationSchema.schemaEmail.validate({ email })
+        .catch((err) => res.status(400).json(err.errors));
+      validationSchema.schemaPassword.validate({ password })
+        .catch((err) => res.status(400).json(err.errors));
+      validationSchema.schemaUserName.validate({ name })
+        .catch((err) => res.status(400).json(err.errors));
+      validationSchema.schemaUserAge.validate({ age })
+        .catch((err) => res.status(400).json(err.errors));
 
       // check if user already exist
-      // Validate if user exist in our database
       const oldUser = await userService.findEmail(email);
       if (oldUser) {
         return res.status(409).json({ message: 'User Already Exist. Please Login' });
@@ -44,23 +44,12 @@ const handler = nc({
       const user = await userService.createUser(email, encryptedPassword, name, age);
 
       // Create token
-      const token = jwt.sign(
-        { userId: user.id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: '2h',
-        },
-      );
-      // save user token
-      // user.token = token;
-      //  const result = await userService.addToken(user.id, token);
+      const token = await createToken(user.id, email);
 
-      res.status(201).json({ token });
+      return res.status(201).json({ message: 'user registered!', token });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err.message);
     }
-    // Our register logic ends here
-    return res.status(200).json({ message: 'user registered!' });
   });
 
 export default handler;

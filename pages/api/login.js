@@ -1,7 +1,8 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import userService from '../../src/server/services/user.service';
+import createToken from '../../src/server/services/token.service';
+import validationSchema from '../../src/server/validations/users.validation';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
 const handler = nc({
@@ -12,27 +13,24 @@ const handler = nc({
       // Get user input
       const { email, password } = req.body;
 
-      // Validate user input
-      if (!(email && password)) {
-        res.status(400).json({ message: 'All input is required' });
-      }
+      validationSchema.schemaEmail.validate({ email }).catch((err) => {
+        res.status(400).json(err.name, err.errors);
+      });
+      validationSchema.schemaPassword.validate({ password }).catch((err) => {
+        res.status(400).json(err.name, err.errors);
+      });
       // Validate if user exist in our database
       const user = await userService.findEmail(email);
+
       if (user && (await bcrypt.compare(password, user.password))) {
         // Create token
-        const token = jwt.sign(
-          { userId: user.id, email },
-          process.env.TOKEN_KEY,
-          {
-            expiresIn: '2h',
-          },
-        );
+        const token = await createToken({ userId: user.id, email });
 
-        res.status(200).json({ token });
+        return res.status(200).json({ token });
       }
-      res.status(400).json({ message: 'Invalid Credentials' });
+      return res.status(400).json({ message: 'Invalid Credentials' });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err.message);
     }
   });
 

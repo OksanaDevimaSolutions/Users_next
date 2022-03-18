@@ -35,7 +35,7 @@ const handler = nc({
     }
   })
   .put(async (req, res) => {
-    if (+req.query.id === +req.user.userId) {
+    if (parseInt(req.query.id) === parseInt(req.user.userId)) {
       try {
         const { id } = await validationSchema.schemaId.validate({ id: req.user.userId });
         const userName = req.body.name;

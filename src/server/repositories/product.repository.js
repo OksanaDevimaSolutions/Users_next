@@ -46,11 +46,7 @@ export const findByIdAndDelete = async (id, userId) => {
     },
   });
 
-  if (countDeleted > 0) {
-    return true;
-  }
-
-  return false;
+  return countDeleted > 0;
 };
 export const createProduct = async (title, price, userId) => {
   const newProduct = await Product.create({ title, price, userId });

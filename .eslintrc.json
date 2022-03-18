@@ -4,6 +4,7 @@
     "linebreak-style":"off",
     "import/no-named-as-default-member":"off",
     "react/jsx-props-no-spreading":"off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "radix":["error", "as-needed"]
    }
 }
