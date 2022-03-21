@@ -20,8 +20,8 @@ export const findByIdAndDelete = async (id) => {
   const result = await userRepo.findByIdAndDelete(id);
   return result;
 };
-export const createUser = async (email, password, name, age) => {
-  const user = await userRepo.createUser(email, password, name, age);
+export const createUser = async (email, password, name, age, uniqueString) => {
+  const user = await userRepo.createUser(email, password, name, age, uniqueString);
   return user;
 };
 export const getAllEmails = async () => {
@@ -31,6 +31,14 @@ export const getAllEmails = async () => {
 export const findEmail = async (email) => {
   const user = await userRepo.findEmail(email);
   return user;
+};
+export const findUniqueString = async (uniqueString) => {
+  const user = await userRepo.findUniqueString(uniqueString);
+  return user;
+};
+export const addConfirmation = async (id) => {
+  const result = await userRepo.addConfirmation(id);
+  return result;
 };
 export const addToken = async (id, token) => {
   const result = await userRepo.addToken(id, token);
@@ -45,6 +53,8 @@ const userService = {
   createUser,
   getAllEmails,
   findEmail,
+  findUniqueString,
+  addConfirmation,
   addToken,
 };
 
