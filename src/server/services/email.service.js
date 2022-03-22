@@ -13,43 +13,13 @@ export const createUniqueString = () => {
 };
 
 export const sendEmail = (email, uniqueString) => {
-  // const transporter = nodemailer.createTransport({
-  //   host: 'smtp.gmail.com',
-  //   // encryption: 'tls',
-  //   // port: 587,
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     type: 'OAuth2',
-  //     user: process.env.EMAIL_USER,
-  //     pass: process.env.EMAIL_PASSWORD,
-  //     serviceClient: process.env.EMAIL_CLIENT_ID,
-  //     privateKey: process.env.EMAIL_PRIVATE_KEY,
-  //   },
-  // });
-
-  //   transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
-  //     let accessToken = userTokens[user];
-  //     if(!accessToken){
-  //         return callback(new Error('Unknown user'));
-  //     }else{
-  //         return callback(null, accessToken);
-  //     }
-  // });
-
-  // console.log(transporter);
-
   const { OAuth2 } = google.auth;
 
-  // const myOAuth2Client = new OAuth2("client ID goes here","client secret goes here","https://developers.google.com/oauthplayground")
   const myOAuth2Client = new OAuth2(process.env.EMAIL_CLIENT_ID, process.env.EMAIL_CLIENT_SECRET, 'https://developers.google.com/oauthplayground');
-  console.log('myOAuth2Client');
-  console.log(myOAuth2Client);
+
   myOAuth2Client.setCredentials({ refresh_token: process.env.EMAIL_CLIENT_REFRESH_TOKEN });
 
   const myAccessToken = myOAuth2Client.getAccessToken();
-  console.log('myAccessToken');
-  console.log(myAccessToken);
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
