@@ -29,6 +29,9 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/nodemailer": "^6.4.4",
+    "@types/react": "^17.0.42",
     "eslint": "8.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "12.1.0",

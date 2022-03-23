@@ -1,7 +1,7 @@
 import User from '../models/User.models';
 import Product from '../models/Product.models';
 
-export const getOneById = async (id) => {
+export const getOneById = async (id:number) => {
   const user = await User.findAll({
     where: {
       id,
@@ -39,8 +39,8 @@ export const getAll = async () => {
   return users;
 };
 
-export const findByIdAndUpdate = async (id, name, age) => {
-  const countUpdated = await User.update({ name, age }, {
+export const findByIdAndUpdate = async (id:number, name:string, age:number) => {
+  const countUpdated = await +User.update({ name, age }, {
     where: {
       id,
     },
@@ -53,7 +53,7 @@ export const findByIdAndUpdate = async (id, name, age) => {
   return false;
 };
 
-export const findByIdAndDelete = async (id) => {
+export const findByIdAndDelete = async (id:number) => {
   const countDeleted = await User.destroy({
     where: {
       id,
@@ -66,7 +66,7 @@ export const findByIdAndDelete = async (id) => {
 
   return false;
 };
-export const createUser = async (email, password, name, age, uniqueString) => {
+export const createUser = async (email:string, password:string, name:string, age:number, uniqueString:string) => {
   const newUser = await User.create({
     email, password, name, age, uniqueString,
   });
@@ -79,7 +79,7 @@ export const getAllEmails = async () => {
   });
   return users;
 };
-export const findEmail = async (email) => {
+export const findEmail = async (email:string) => {
   const user = await User.findAll({
     where: {
       email,
@@ -92,7 +92,7 @@ export const findEmail = async (email) => {
 
   return null;
 };
-export const findByUniqueString = async (uniqueString) => {
+export const findByUniqueString = async (uniqueString:string) => {
   const user = await User.findAll({
     where: {
       uniqueString,
@@ -105,16 +105,16 @@ export const findByUniqueString = async (uniqueString) => {
   return null;
 };
 
-export const addConfirmation = async (id) => {
-  const countUpdated = await User.update({ isConfirmed: true }, {
+export const addConfirmation = async (id:number) => {
+  const countUpdated = await +User.update({ isConfirmed: true }, {
     where: {
       id,
     },
   });
   return countUpdated > 0;
 };
-export const addToken = async (id, token) => {
-  const countUpdated = await User.update({ token }, {
+export const addToken = async (id:number, token:string) => {
+  const countUpdated = await +User.update({ token }, {
     where: {
       id,
     },

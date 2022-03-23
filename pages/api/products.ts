@@ -1,16 +1,17 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import nc from 'next-connect';
 import productService from '../../src/server/services/product.service';
 import validationSchema from '../../src/server/validations/products.validation';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 import authMiddleware from '../../src/server/middlewares/auth.middleware';
 
-const handler = nc({
+const handler = nc<NextApiRequest, NextApiResponse>({
 })
   .use(loggerMiddleware)
   .use(authMiddleware)
   .get(async (req, res) => {
     try {
-      const getAllproducts = await productService.getAll(req.user.userId);
+      const getAllproducts = await productService.getAll(req['user']['userId']);
 
       res.status(200).json(getAllproducts);
     } catch (error) {

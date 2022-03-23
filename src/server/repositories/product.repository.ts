@@ -1,6 +1,6 @@
 import Product from '../models/Product.models';
 
-export const getOneById = async (id, userId) => {
+export const getOneById = async (id:number, userId:number) => {
   const product = await Product.findAll({
     where: {
       id,
@@ -12,7 +12,7 @@ export const getOneById = async (id, userId) => {
   }
   return null;
 };
-export const getAll = async (userId) => {
+export const getAll = async (userId:number) => {
   const products = await Product.findAll({
     where: {
       user_id: userId,
@@ -24,8 +24,8 @@ export const getAll = async (userId) => {
   return products;
 };
 
-export const findByIdAndUpdate = async (id, title, price, userId) => {
-  const countUpdated = await Product.update({ title, price, userId }, {
+export const findByIdAndUpdate = async (id:number, title:string, price:number, userId:number) => {
+  const countUpdated = await +Product.update({ title, price, userId }, {
     where: {
       id,
       user_id: userId,
@@ -38,7 +38,7 @@ export const findByIdAndUpdate = async (id, title, price, userId) => {
 
   return false;
 };
-export const findByIdAndDelete = async (id, userId) => {
+export const findByIdAndDelete = async (id:number, userId:number) => {
   const countDeleted = await Product.destroy({
     where: {
       id,
@@ -48,7 +48,7 @@ export const findByIdAndDelete = async (id, userId) => {
 
   return countDeleted > 0;
 };
-export const createProduct = async (title, price, userId) => {
+export const createProduct = async (title:string, price:number, userId:number) => {
   const newProduct = await Product.create({ title, price, userId });
 
   return newProduct;

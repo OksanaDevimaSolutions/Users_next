@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = (email, uniqueString) => {
+export const sendEmail = (email:string, uniqueString:string) => {
   const sender = process.env.EMAIL_USER;
   const mailOptions = {
     from: sender,

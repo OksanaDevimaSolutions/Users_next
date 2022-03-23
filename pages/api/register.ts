@@ -5,8 +5,9 @@ import userService from '../../src/server/services/user.service';
 import emailService from '../../src/server/services/email.service';
 // import tokenService from '../../src/server/services/token.service';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
+import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = nc({
+const handler = nc<NextApiRequest, NextApiResponse>({
 })
   .use(loggerMiddleware)
   //   .get(async (req, res) => {
@@ -49,7 +50,7 @@ const handler = nc({
       // return res.status(201).json({ message: 'user registered!', token });
 
       return res.status(201).json({
-        message: `user ${user.id} registered! Please confirm your email to login`,
+        message: `user ${user['id']} registered! Please confirm your email to login`,
         // uniqueString: user.uniqueString,
       });
     } catch (err) {

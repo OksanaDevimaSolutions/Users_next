@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import userService from '../../src/server/services/user.service';
@@ -5,7 +6,7 @@ import tokenService from '../../src/server/services/token.service';
 import validationSchema from '../../src/server/validations/users.validation';
 import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
 
-const handler = nc({
+const handler = nc<NextApiRequest, NextApiResponse>({
 })
   .use(loggerMiddleware)
   .post(async (req, res) => {
@@ -14,7 +15,7 @@ const handler = nc({
       const { email, password } = req.body;
 
       await validationSchema.schemaEmailPassword.validate({ email, password }).catch((err) => {
-        res.status(400).json(err.name, err.errors);
+        res.status(400).json(err.errors);
       });
 
       // Validate if user exist in our database
