@@ -66,9 +66,9 @@ export const findByIdAndDelete = async (id) => {
 
   return false;
 };
-export const createUser = async (email, password, name, age) => {
+export const createUser = async (email, password, name, age, uniqueString) => {
   const newUser = await User.create({
-    email, password, name, age,
+    email, password, name, age, uniqueString,
   });
 
   return newUser;
@@ -83,6 +83,7 @@ export const findEmail = async (email) => {
   const user = await User.findAll({
     where: {
       email,
+      isConfirmed: true,
     },
   });
   if (user[0]) {
@@ -90,6 +91,27 @@ export const findEmail = async (email) => {
   }
 
   return null;
+};
+export const findByUniqueString = async (uniqueString) => {
+  const user = await User.findAll({
+    where: {
+      uniqueString,
+    },
+  });
+  if (user[0]) {
+    return user[0];
+  }
+
+  return null;
+};
+
+export const addConfirmation = async (id) => {
+  const countUpdated = await User.update({ isConfirmed: true }, {
+    where: {
+      id,
+    },
+  });
+  return countUpdated > 0;
 };
 export const addToken = async (id, token) => {
   const countUpdated = await User.update({ token }, {
@@ -108,6 +130,8 @@ const userRepository = {
   createUser,
   getAllEmails,
   findEmail,
+  findByUniqueString,
+  addConfirmation,
   addToken,
 };
 

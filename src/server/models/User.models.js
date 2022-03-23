@@ -27,6 +27,14 @@ const User = sequelize.define('User', {
     type: DataTypes.INTEGER,
     // allowNull defaults to true
   },
+  uniqueString: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  isConfirmed: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 }, {
   tableName: 'users',
   timestamps: false,
