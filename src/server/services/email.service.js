@@ -25,6 +25,7 @@ const transporter = nodemailer.createTransport({
     clientId: process.env.EMAIL_CLIENT_ID,
     clientSecret: process.env.EMAIL_CLIENT_SECRET,
     refreshToken: process.env.EMAIL_CLIENT_REFRESH_TOKEN,
+    accessToken: myAccessToken, // access token variable we defined earlier
   },
 });
 
@@ -35,7 +36,6 @@ export const sendEmail = (email, uniqueString) => {
     to: email,
     subject: 'Email confirmation',
     html: `Press <a href="http://localhost:3000/api/verify/${uniqueString}"> here </a> to verify your email. Thanks`,
-    accessToken: myAccessToken, // access token variable we defined earlier
   };
   transporter.sendMail(mailOptions, (err, res) => {
     if (err) {
