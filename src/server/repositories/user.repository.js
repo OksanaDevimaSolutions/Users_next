@@ -92,7 +92,7 @@ export const findEmail = async (email) => {
 
   return null;
 };
-export const findUniqueString = async (uniqueString) => {
+export const findByUniqueString = async (uniqueString) => {
   const user = await User.findAll({
     where: {
       uniqueString,
@@ -130,7 +130,7 @@ const userRepository = {
   createUser,
   getAllEmails,
   findEmail,
-  findUniqueString,
+  findByUniqueString,
   addConfirmation,
   addToken,
 };

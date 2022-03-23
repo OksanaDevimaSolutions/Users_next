@@ -6,7 +6,7 @@ const handler = nc({
   .get(async (req, res) => {
     try {
       const { uniqueString } = req.query;
-      const user = await userService.findUniqueString(uniqueString);
+      const user = await userService.findByUniqueString(uniqueString);
       if (user) {
         const result = userService.addConfirmation(user.id);
         if (result) {

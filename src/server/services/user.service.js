@@ -32,8 +32,8 @@ export const findEmail = async (email) => {
   const user = await userRepo.findEmail(email);
   return user;
 };
-export const findUniqueString = async (uniqueString) => {
-  const user = await userRepo.findUniqueString(uniqueString);
+export const findByUniqueString = async (uniqueString) => {
+  const user = await userRepo.findByUniqueString(uniqueString);
   return user;
 };
 export const addConfirmation = async (id) => {
@@ -53,7 +53,7 @@ const userService = {
   createUser,
   getAllEmails,
   findEmail,
-  findUniqueString,
+  findByUniqueString,
   addConfirmation,
   addToken,
 };

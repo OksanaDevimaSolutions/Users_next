@@ -50,7 +50,7 @@ const handler = nc({
 
       return res.status(201).json({
         message: `user ${user.id} registered! Please confirm your email to login`,
-        uniqueString: user.uniqueString,
+        // uniqueString: user.uniqueString,
       });
     } catch (err) {
       return res.status(500).json(err.message);
