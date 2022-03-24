@@ -1,6 +1,6 @@
-import Product from '../models/Product.models';
+import Product from "../models/Product.models";
 
-export const getOneById = async (id:number, userId:number) => {
+const getOneById = async (id: number, userId: number) => {
   const product = await Product.findAll({
     where: {
       id,
@@ -12,25 +12,31 @@ export const getOneById = async (id:number, userId:number) => {
   }
   return null;
 };
-export const getAll = async (userId:number) => {
+const getAll = async (userId: number) => {
   const products = await Product.findAll({
     where: {
       user_id: userId,
     },
-    order: [
-      ['id', 'DESC'],
-    ],
+    order: [["id", "DESC"]],
   });
   return products;
 };
 
-export const findByIdAndUpdate = async (id:number, title:string, price:number, userId:number) => {
-  const countUpdated = await Product.update({ title, price, userId }, {
-    where: {
-      id,
-      user_id: userId,
-    },
-  });
+const findByIdAndUpdate = async (
+  id: number,
+  title: string,
+  price: number,
+  userId: number
+) => {
+  const countUpdated = await Product.update(
+    { title, price, userId },
+    {
+      where: {
+        id,
+        user_id: userId,
+      },
+    }
+  );
 
   if (countUpdated[0] > 0) {
     return true;
@@ -38,7 +44,7 @@ export const findByIdAndUpdate = async (id:number, title:string, price:number, u
 
   return false;
 };
-export const findByIdAndDelete = async (id:number, userId:number) => {
+const findByIdAndDelete = async (id: number, userId: number) => {
   const countDeleted = await Product.destroy({
     where: {
       id,
@@ -48,13 +54,17 @@ export const findByIdAndDelete = async (id:number, userId:number) => {
 
   return countDeleted > 0;
 };
-export const createProduct = async (title:string, price:number, userId:number) => {
+const createProduct = async (title: string, price: number, userId: number) => {
   const newProduct = await Product.create({ title, price, userId });
 
   return newProduct;
 };
 const productRepository = {
-  getOneById, getAll, findByIdAndUpdate, findByIdAndDelete, createProduct,
+  getOneById,
+  getAll,
+  findByIdAndUpdate,
+  findByIdAndDelete,
+  createProduct,
 };
 
 export default productRepository;

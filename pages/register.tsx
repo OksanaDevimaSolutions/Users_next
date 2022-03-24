@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 // import useSwr from 'swr';
 // import Link from 'next/link';
 // import fetcher from '../src/utils/fetcher';
@@ -34,7 +34,6 @@ function Register() {
           <br />
           <input type="submit" value="Register" name="submit" />
           <br />
-
         </form>
       </div>
     </div>

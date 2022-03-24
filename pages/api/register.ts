@@ -1,14 +1,15 @@
-import nc from 'next-connect';
-import bcrypt from 'bcryptjs';
-import validationSchema from '../../src/server/validations/users.validation';
-import userService from '../../src/server/services/user.service';
-import emailService from '../../src/server/services/email.service';
-// import tokenService from '../../src/server/services/token.service';
-import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
-import { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcryptjs";
+import nc from "next-connect";
 
-const handler = nc<NextApiRequest, NextApiResponse>({
-})
+import loggerMiddleware from "../../src/server/middlewares/logger.middleware";
+import emailService from "../../src/server/services/email.service";
+import userService from "../../src/server/services/user.service";
+import validationSchema from "../../src/server/validations/users.validation";
+// import tokenService from '../../src/server/services/token.service';
+
+import type { NextApiRequest, NextApiResponse } from "next";
+
+const handler = nc<NextApiRequest, NextApiResponse>({})
   .use(loggerMiddleware)
   //   .get(async (req, res) => {
   //     try {
@@ -21,32 +22,40 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   .post(async (req, res) => {
     try {
       // Get user input
-      const {
-        email, password, name, age,
-      } = req.body;
+      const { email, password, name, age } = req.body;
 
       try {
         await validationSchema.schemaUserValidation.validate({
-        name, age, email, password,
-      })
-    }
-        catch(err)  {
-          return res.status(400).json(err.errors);
-        };
+          name,
+          age,
+          email,
+          password,
+        });
+      } catch (err) {
+        return res.status(400).json(err.errors);
+      }
 
       // check if user already exist
       const oldUser = await userService.findEmail(email);
       if (oldUser) {
-        return res.status(409).json({ message: 'User Already Exist. Please Login' });
+        return res
+          .status(409)
+          .json({ message: "User Already Exist. Please Login" });
       }
       // Encrypt user password
       const encryptedPassword = await bcrypt.hash(password, 10);
 
       const uniqueString = await emailService.createUniqueString();
       console.log(uniqueString);
-      
+
       // Create user in our database
-      const user = await userService.createUser(email, encryptedPassword, name, age, uniqueString);
+      const user = await userService.createUser(
+        email,
+        encryptedPassword,
+        name,
+        age,
+        uniqueString
+      );
 
       await emailService.sendEmail(email, uniqueString);
 
@@ -56,7 +65,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({
       // return res.status(201).json({ message: 'user registered!', token });
 
       return res.status(201).json({
-        message: `user ${user['id']} registered! Please confirm your email to login`,
+        message: `user ${user.id} registered! Please confirm your email to login`,
         // uniqueString: user.uniqueString,
       });
     } catch (err) {

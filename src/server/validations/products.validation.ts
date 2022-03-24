@@ -1,9 +1,9 @@
-import * as yup from 'yup';
+import * as yup from "yup";
 
-export const schemaId = yup.object().shape({
+const schemaId = yup.object().shape({
   id: yup.number().positive().integer(),
 });
-export const schemaProductEdit = yup.object().shape({
+const schemaProductEdit = yup.object().shape({
   title: yup.string().min(2).max(255),
   price: yup.number().positive(),
   userId: yup.number().positive().integer(),

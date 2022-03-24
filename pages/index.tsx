@@ -1,10 +1,11 @@
-import useSwr from 'swr';
-import Link from 'next/link';
-import React from 'react';
-import fetcher from '../src/utils/fetcher';
+import Link from "next/link";
+import React from "react";
+import useSwr from "swr";
+
+import fetcher from "../src/utils/fetcher";
 
 export default function Index() {
-  const { data, error } = useSwr('/api/users', fetcher);
+  const { data, error } = useSwr("/api/users", fetcher);
 
   if (error) return <div>Failed to load users</div>;
   if (!data) return <div>Loading...</div>;

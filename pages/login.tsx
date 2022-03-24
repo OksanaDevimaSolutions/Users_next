@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 // import useSwr from 'swr';
 // import Link from 'next/link';
 // import fetcher from '../src/utils/fetcher';
 
 function Login() {
-//   const { data, error } = useSwr('/api/login', fetcher);
-//   if (error) return <div>Failed to load login form</div>;
-//   if (!data) return <div>Loading...</div>;
+  //   const { data, error } = useSwr('/api/login', fetcher);
+  //   if (error) return <div>Failed to load login form</div>;
+  //   if (!data) return <div>Loading...</div>;
   return (
     <div>
       <div>
@@ -24,7 +24,6 @@ function Login() {
           <br />
           <input type="submit" value="Login" name="submit" />
           <br />
-
         </form>
       </div>
     </div>

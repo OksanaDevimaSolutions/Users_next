@@ -1,27 +1,32 @@
-// import nodemailer from 'nodemailer';
-const nodemailer = require('nodemailer');
-import { google } from 'googleapis';
+import { google } from "googleapis";
+import nodemailer from "nodemailer";
 
-export const createUniqueString = () => {
+const createUniqueString = () => {
   const len = 8;
-  let randStr = '';
+  let randStr = "";
   for (let i = 0; i < len; i += 1) {
-    const ch = Math.floor((Math.random() * 10) + 1);
+    const ch = Math.floor(Math.random() * 10 + 1);
     randStr += ch;
   }
   return randStr;
 };
 const { OAuth2 } = google.auth;
 
-const myOAuth2Client = new OAuth2(process.env.EMAIL_CLIENT_ID, process.env.EMAIL_CLIENT_SECRET, 'https://developers.google.com/oauthplayground');
+const myOAuth2Client = new OAuth2(
+  process.env.EMAIL_CLIENT_ID,
+  process.env.EMAIL_CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
 
-myOAuth2Client.setCredentials({ refresh_token: process.env.EMAIL_CLIENT_REFRESH_TOKEN });
+myOAuth2Client.setCredentials({
+  refresh_token: process.env.EMAIL_CLIENT_REFRESH_TOKEN,
+});
 
 const myAccessToken = myOAuth2Client.getAccessToken();
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
-    type: 'OAuth2',
+    type: "OAuth2",
     user: process.env.EMAIL_USER,
     clientId: process.env.EMAIL_CLIENT_ID,
     clientSecret: process.env.EMAIL_CLIENT_SECRET,
@@ -30,12 +35,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = (email:string, uniqueString:string) => {
+const sendEmail = (email: string, uniqueString: string) => {
   const sender = process.env.EMAIL_USER;
   const mailOptions = {
     from: sender,
     to: email,
-    subject: 'Email confirmation',
+    subject: "Email confirmation",
     html: `Press <a href="http://localhost:3000/api/verify/${uniqueString}"> here </a> to verify your email. Thanks`,
   };
   transporter.sendMail(mailOptions, (err, res) => {
@@ -46,12 +51,13 @@ export const sendEmail = (email:string, uniqueString:string) => {
     } else {
       transporter.close();
     }
-    res.json({ message: 'Email has been sent: check your inbox!' });
+    res.json({ message: "Email has been sent: check your inbox!" });
   });
 };
 
 const emailService = {
-  createUniqueString, sendEmail,
+  createUniqueString,
+  sendEmail,
 };
 
 export default emailService;

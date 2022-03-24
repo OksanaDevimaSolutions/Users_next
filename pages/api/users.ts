@@ -1,10 +1,11 @@
-import nc from 'next-connect';
-import userService from '../../src/server/services/user.service';
-import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
-import { NextApiRequest, NextApiResponse } from "next";
+import nc from "next-connect";
 
-const handler = nc<NextApiRequest, NextApiResponse>({
-})
+import loggerMiddleware from "../../src/server/middlewares/logger.middleware";
+import userService from "../../src/server/services/user.service";
+
+import type { NextApiRequest, NextApiResponse } from "next";
+
+const handler = nc<NextApiRequest, NextApiResponse>({})
   .use(loggerMiddleware)
   .get(async (req, res) => {
     try {

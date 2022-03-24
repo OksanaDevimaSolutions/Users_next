@@ -1,17 +1,19 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import nc from 'next-connect';
-import productService from '../../src/server/services/product.service';
-import validationSchema from '../../src/server/validations/products.validation';
-import loggerMiddleware from '../../src/server/middlewares/logger.middleware';
-import authMiddleware from '../../src/server/middlewares/auth.middleware';
+import nc from "next-connect";
 
-const handler = nc<NextApiRequest, NextApiResponse>({
-})
+import authMiddleware from "../../src/server/middlewares/auth.middleware";
+import loggerMiddleware from "../../src/server/middlewares/logger.middleware";
+import productService from "../../src/server/services/product.service";
+import validationSchema from "../../src/server/validations/products.validation";
+
+import type { NextApiAuthRequest } from "../../src/server/types/auth.types";
+import type { NextApiResponse } from "next";
+
+const handler = nc<NextApiAuthRequest, NextApiResponse>({})
   .use(loggerMiddleware)
   .use(authMiddleware)
   .get(async (req, res) => {
     try {
-      const getAllproducts = await productService.getAll(req['user']['userId']);
+      const getAllproducts = await productService.getAll(req.user.userId);
 
       res.status(200).json(getAllproducts);
     } catch (error) {
@@ -22,7 +24,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     try {
       const productTitle = req.body.title;
       const productPrice = req.body.price;
-      const productUserId = req['user']['userId']
+      const productUserId = req.user.userId;
 
       await validationSchema.schemaProductEdit.validate({
         title: productTitle,
@@ -33,7 +35,11 @@ const handler = nc<NextApiRequest, NextApiResponse>({
         userId: productUserId,
       });
 
-      const result = await productService.createProduct(productTitle, productPrice, productUserId);
+      const result = await productService.createProduct(
+        productTitle,
+        productPrice,
+        productUserId
+      );
 
       res.status(200).json(result);
     } catch (error) {

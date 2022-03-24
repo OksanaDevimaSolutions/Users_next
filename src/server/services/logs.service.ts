@@ -1,6 +1,11 @@
-import logsRepo from '../repositories/logs.repository';
+import logsRepo from "../repositories/logs.repository";
 
-export const createLogs = (route:string, method:string, body:string, time:Date | number) => {
+const createLogs = (
+  route: string,
+  method: string,
+  body: string,
+  time: Date | number
+) => {
   logsRepo.createLogs(route, method, body, time);
 };
 
