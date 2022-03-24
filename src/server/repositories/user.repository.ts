@@ -40,13 +40,12 @@ export const getAll = async () => {
 };
 
 export const findByIdAndUpdate = async (id:number, name:string, age:number) => {
-  const countUpdated = await +User.update({ name, age }, {
+  const countUpdated = await User.update({ name, age }, {
     where: {
       id,
     },
   });
-
-  if (countUpdated > 0) {
+  if (countUpdated[0] > 0) {
     return true;
   }
 

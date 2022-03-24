@@ -25,14 +25,14 @@ export const getAll = async (userId:number) => {
 };
 
 export const findByIdAndUpdate = async (id:number, title:string, price:number, userId:number) => {
-  const countUpdated = await +Product.update({ title, price, userId }, {
+  const countUpdated = await Product.update({ title, price, userId }, {
     where: {
       id,
       user_id: userId,
     },
   });
 
-  if (countUpdated > 0) {
+  if (countUpdated[0] > 0) {
     return true;
   }
 

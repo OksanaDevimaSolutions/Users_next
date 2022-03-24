@@ -25,10 +25,14 @@ const handler = nc<NextApiRequest, NextApiResponse>({
         email, password, name, age,
       } = req.body;
 
-      await validationSchema.schemaUserValidation.validate({
+      try {
+        await validationSchema.schemaUserValidation.validate({
         name, age, email, password,
       })
-        .catch((err) => res.status(400).json(err.errors));
+    }
+        catch(err)  {
+          return res.status(400).json(err.errors);
+        };
 
       // check if user already exist
       const oldUser = await userService.findEmail(email);
@@ -39,6 +43,8 @@ const handler = nc<NextApiRequest, NextApiResponse>({
       const encryptedPassword = await bcrypt.hash(password, 10);
 
       const uniqueString = await emailService.createUniqueString();
+      console.log(uniqueString);
+      
       // Create user in our database
       const user = await userService.createUser(email, encryptedPassword, name, age, uniqueString);
 
