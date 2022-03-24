@@ -1,4 +1,5 @@
-import nodemailer from 'nodemailer';
+// import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 import { google } from 'googleapis';
 
 export const createUniqueString = () => {
