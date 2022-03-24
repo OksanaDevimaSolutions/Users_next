@@ -1,15 +1,16 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from "next";
 import userService from '../../../src/server/services/user.service';
 import validationSchema from '../../../src/server/validations/users.validation';
 import loggerMiddleware from '../../../src/server/middlewares/logger.middleware';
 import authMiddleware from '../../../src/server/middlewares/auth.middleware';
 
-const handler = nc({
+const handler = nc<NextApiRequest, NextApiResponse>({
 })
   .use(loggerMiddleware)
   .use(authMiddleware)
   .get(async (req, res) => {
-    if (+req.query.id === +req.user.userId) {
+    if (+req.query.id === +req['user']['userId']) {
       try {
         const { id } = await validationSchema.schemaId.validate(req.query);
         const result = await userService.getOneById(id);
@@ -22,9 +23,9 @@ const handler = nc({
     }
   })
   .delete(async (req, res) => {
-    if (+req.query.id === +req.user.userId) {
+    if (+req.query.id === +req['user']['userId']) {
       try {
-        const { id } = await validationSchema.schemaId.validate({ id: req.user.userId });
+        const { id } = await validationSchema.schemaId.validate({ id: req['user']['userId'] });
         const result = await userService.findByIdAndDelete(id);
         res.status(200).json(result);
       } catch (error) {
@@ -35,9 +36,9 @@ const handler = nc({
     }
   })
   .put(async (req, res) => {
-    if (parseInt(req.query.id) === parseInt(req.user.userId)) {
+    if (+req.query.id === parseInt(req['user']['userId'])) {
       try {
-        const { id } = await validationSchema.schemaId.validate({ id: req.user.userId });
+        const { id } = await validationSchema.schemaId.validate({ id: req['user']['userId'] });
         const userName = req.body.name;
         const userAge = req.body.age;
 

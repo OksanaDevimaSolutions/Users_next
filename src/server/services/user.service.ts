@@ -32,7 +32,7 @@ export const findEmail = async (email:string) => {
   const user = await userRepo.findEmail(email);
   return user;
 };
-export const findByUniqueString = async (uniqueString:string) => {
+export const findByUniqueString = async (uniqueString:string | string[]) => {
   const user = await userRepo.findByUniqueString(uniqueString);
   return user;
 };

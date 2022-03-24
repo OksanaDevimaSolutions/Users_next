@@ -1,14 +1,15 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from "next";
 import userService from '../../../src/server/services/user.service';
 
-const handler = nc({
+const handler = nc<NextApiRequest, NextApiResponse>({
 })
   .get(async (req, res) => {
     try {
       const { uniqueString } = req.query;
       const user = await userService.findByUniqueString(uniqueString);
       if (user) {
-        const result = userService.addConfirmation(user.id);
+        const result = userService.addConfirmation(user['id']);
         if (result) {
           return res.status(200).json({ message: 'email confirmed. Please login' });
         }

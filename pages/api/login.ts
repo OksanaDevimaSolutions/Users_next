@@ -21,9 +21,9 @@ const handler = nc<NextApiRequest, NextApiResponse>({
       // Validate if user exist in our database
       const user = await userService.findEmail(email);
 
-      if (user && (await bcrypt.compare(password, user.password))) {
+      if (user && (await bcrypt.compare(password, user['password']))) {
         // Create token
-        const token = await tokenService.createToken({ userId: user.id, email });
+        const token = await tokenService.createToken({ userId: user['id'], email });
 
         return res.status(200).json({ token });
       }

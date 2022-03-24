@@ -22,7 +22,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     try {
       const productTitle = req.body.title;
       const productPrice = req.body.price;
-      const productUserId = req.user.userId;
+      const productUserId = req['user']['userId']
 
       await validationSchema.schemaProductEdit.validate({
         title: productTitle,

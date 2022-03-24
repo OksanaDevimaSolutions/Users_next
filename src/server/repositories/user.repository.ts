@@ -92,7 +92,7 @@ export const findEmail = async (email:string) => {
 
   return null;
 };
-export const findByUniqueString = async (uniqueString:string) => {
+export const findByUniqueString = async (uniqueString:string | string[]) => {
   const user = await User.findAll({
     where: {
       uniqueString,

@@ -1,17 +1,18 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from "next";
 import productService from '../../../src/server/services/product.service';
 import validationSchema from '../../../src/server/validations/products.validation';
 import loggerMiddleware from '../../../src/server/middlewares/logger.middleware';
 import authMiddleware from '../../../src/server/middlewares/auth.middleware';
 
-const handler = nc({
+const handler = nc<NextApiRequest, NextApiResponse>({
 })
   .use(loggerMiddleware)
   .use(authMiddleware)
   .get(async (req, res) => {
     try {
       const { id } = await validationSchema.schemaId.validate(req.query);
-      const result = await productService.getOneById(id, req.user.userId);
+      const result = await productService.getOneById(id, req['user']['userId']);
 
       if (!result) {
         return res.status(404).json({ message: 'no results...' });
@@ -24,7 +25,7 @@ const handler = nc({
   .delete(async (req, res) => {
     try {
       const { id } = await validationSchema.schemaId.validate(req.query);
-      const result = await productService.findByIdAndDelete(id, req.user.userId);
+      const result = await productService.findByIdAndDelete(id, req['user']['userId']);
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json(error);
@@ -39,7 +40,7 @@ const handler = nc({
         id,
         title,
         price,
-        req.user.userId,
+        req['user']['userId'],
       );
       res.status(200).json(productToUpdate);
     } catch (error) {
