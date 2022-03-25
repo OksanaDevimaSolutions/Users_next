@@ -118,7 +118,7 @@ const findByUniqueString = async (uniqueString: string | string[]) => {
 };
 
 const addConfirmation = async (id: number) => {
-  const countUpdated = await +User.update(
+  const countUpdated = await User.update(
     { isConfirmed: true },
     {
       where: {
@@ -126,18 +126,7 @@ const addConfirmation = async (id: number) => {
       },
     }
   );
-  return countUpdated > 0;
-};
-const addToken = async (id: number, token: string) => {
-  const countUpdated = await +User.update(
-    { token },
-    {
-      where: {
-        id,
-      },
-    }
-  );
-  return countUpdated > 0;
+  return countUpdated[0] > 0;
 };
 
 const userRepository = {
@@ -150,7 +139,6 @@ const userRepository = {
   findEmail,
   findByUniqueString,
   addConfirmation,
-  addToken,
 };
 
 export default userRepository;

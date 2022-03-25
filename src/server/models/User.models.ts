@@ -1,43 +1,50 @@
 // import { postgresMd5PasswordHash } from 'pg/lib/utils';
-import { DataTypes } from 'sequelize';
-import sequelize from '../database/connection';
+import { DataTypes } from "sequelize";
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+import sequelize from "../database/connection";
+
+import type { UserInstance } from "../types/models/user.types.models";
+
+const User = sequelize.define<UserInstance>(
+  "User",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      // set(value) {
+      //   this.setDataValue('password', postgresMd5PasswordHash(this.email + value));
+      // },
+    },
+    name: {
+      type: DataTypes.STRING,
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      // allowNull defaults to true
+    },
+    uniqueString: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    isConfirmed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
-  email: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    // set(value) {
-    //   this.setDataValue('password', postgresMd5PasswordHash(this.email + value));
-    // },
-  },
-  name: {
-    type: DataTypes.STRING,
-  },
-  age: {
-    type: DataTypes.INTEGER,
-    // allowNull defaults to true
-  },
-  uniqueString: {
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  isConfirmed: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-}, {
-  tableName: 'users',
-  timestamps: false,
-});
+  {
+    tableName: "users",
+    timestamps: false,
+  }
+);
 
 export default User;

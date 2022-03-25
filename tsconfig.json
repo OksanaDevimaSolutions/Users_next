@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/server/database/connection.js"  ],
+, "src/server/database/connection.ts"  ],
   "exclude": [
     "node_modules"
   ]

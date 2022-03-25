@@ -2,10 +2,9 @@ import nc from "next-connect";
 
 import userService from "../../../src/server/services/user.service";
 
-import type { NextApiAuthRequest } from "../../../src/server/types/auth.types";
-import type { NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-const handler = nc<NextApiAuthRequest, NextApiResponse>({}).get(
+const handler = nc<NextApiRequest, NextApiResponse>({}).get(
   async (req, res) => {
     try {
       const { uniqueString } = req.query;

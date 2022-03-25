@@ -1,5 +1,5 @@
-import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import { Sequelize } from "sequelize";
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ const connect = {
 };
 const sequelize = new Sequelize({
   ...connect,
-  dialect: 'postgres',
+  dialect: "postgres",
   // logging: envUtil.isProdEnv() ? console.log : false,
 });
 

@@ -52,10 +52,6 @@ const addConfirmation = async (id: number) => {
   const result = await userRepo.addConfirmation(id);
   return result;
 };
-const addToken = async (id: number, token: string) => {
-  const result = await userRepo.addToken(id, token);
-  return result;
-};
 
 const userService = {
   getOneById,
@@ -67,7 +63,6 @@ const userService = {
   findEmail,
   findByUniqueString,
   addConfirmation,
-  addToken,
 };
 
 export default userService;
