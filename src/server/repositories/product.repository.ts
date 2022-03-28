@@ -1,7 +1,7 @@
 import Product from "../models/Product.models";
 
 const getOneById = async (id: number, userId: number) => {
-  const product = await Product.findAll({
+  const product = await Product.findOne({
     where: {
       id,
       user_id: userId,
@@ -37,12 +37,7 @@ const findByIdAndUpdate = async (
       },
     }
   );
-
-  if (countUpdated[0] > 0) {
-    return true;
-  }
-
-  return false;
+  return countUpdated[0];
 };
 const findByIdAndDelete = async (id: number, userId: number) => {
   const countDeleted = await Product.destroy({

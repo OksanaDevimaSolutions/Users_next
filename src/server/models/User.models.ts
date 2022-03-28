@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 
 import sequelize from "../database/connection";
 
-import type { UserInstance } from "../types/models/user.types.models";
+import type { UserInstance } from "../types/models/user.types";
 
 const User = sequelize.define<UserInstance>(
   "User",

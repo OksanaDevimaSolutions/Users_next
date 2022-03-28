@@ -8,7 +8,10 @@ const handler = nc<NextApiRequest, NextApiResponse>({}).get(
   async (req, res) => {
     try {
       const { uniqueString } = req.query;
-      const user = await userService.findByUniqueString(uniqueString);
+
+      const user = await userService.findByUniqueString(
+        uniqueString.toString()
+      );
       if (user) {
         const result = userService.addConfirmation(user.id);
         if (result) {
@@ -17,6 +20,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({}).get(
             .json({ message: "email confirmed. Please login" });
         }
       }
+
       return res
         .status(404)
         .json({ message: "Something went wrong. Please try again" });

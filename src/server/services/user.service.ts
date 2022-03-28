@@ -44,7 +44,7 @@ const findEmail = async (email: string) => {
   const user = await userRepo.findEmail(email);
   return user;
 };
-const findByUniqueString = async (uniqueString: string | string[]) => {
+const findByUniqueString = async (uniqueString: string) => {
   const user = await userRepo.findByUniqueString(uniqueString);
   return user;
 };

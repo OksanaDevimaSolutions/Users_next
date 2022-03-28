@@ -104,7 +104,7 @@ const findEmail = async (email: string) => {
 
   return null;
 };
-const findByUniqueString = async (uniqueString: string | string[]) => {
+const findByUniqueString = async (uniqueString: string) => {
   const user = await User.findAll({
     where: {
       uniqueString,
