@@ -22,24 +22,14 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
   })
   .post(async (req, res) => {
     try {
-      const productTitle = req.body.title;
-      const productPrice = req.body.price;
-      const productUserId = req.user.userId;
+      const { title, price } =
+        await validationSchema.schemaProductEdit.validate(req.body);
 
-      await validationSchema.schemaProductEdit.validate({
-        title: productTitle,
-        price: productPrice,
+      const { userId } = await validationSchema.schemaId.validate({
+        userId: req.user.userId,
       });
 
-      await validationSchema.schemaId.validate({
-        userId: productUserId,
-      });
-
-      const result = await productService.createProduct(
-        productTitle,
-        productPrice,
-        productUserId
-      );
+      const result = await productService.createProduct(title, price, userId);
 
       res.status(200).json(result);
     } catch (error) {

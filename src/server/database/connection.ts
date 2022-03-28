@@ -13,7 +13,6 @@ const connect = {
 const sequelize = new Sequelize({
   ...connect,
   dialect: "postgres",
-  // logging: envUtil.isProdEnv() ? console.log : false,
 });
 
 export default sequelize;

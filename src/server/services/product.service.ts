@@ -1,6 +1,5 @@
 import productRepo from "../repositories/product.repository";
 
-// function returns 1 product or an empty strin if that kind of product is absent
 const getOneById = async (id, userId) => {
   const product = await productRepo.getOneById(id, userId);
   return product;
@@ -26,7 +25,6 @@ const createProduct = async (title, price, userId) => {
     return `Can't create product:\n "${err.message}"`;
   }
 };
-// console.log(title,price,user_id);
 const productService = {
   getOneById,
   getAll,

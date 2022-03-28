@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 
-// Create token
 const createToken = async (user) => {
   const result = await jwt.sign(
     { userId: user.userId, email: user.email },

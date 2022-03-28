@@ -1,4 +1,3 @@
-// import { postgresMd5PasswordHash } from 'pg/lib/utils';
 import { DataTypes } from "sequelize";
 
 import sequelize from "../database/connection";
@@ -21,16 +20,12 @@ const User = sequelize.define<UserInstance>(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      // set(value) {
-      //   this.setDataValue('password', postgresMd5PasswordHash(this.email + value));
-      // },
     },
     name: {
       type: DataTypes.STRING,
     },
     age: {
       type: DataTypes.INTEGER,
-      // allowNull defaults to true
     },
     uniqueString: {
       type: DataTypes.STRING,

@@ -45,18 +45,12 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
         const { id } = await validationSchema.schemaId.validate({
           id: req.user.userId,
         });
-        const userName = req.body.name;
-        const userAge = req.body.age;
 
-        await validationSchema.schemaUserEdit.validate({
-          name: userName,
-          age: userAge,
+        const { name, age } = await validationSchema.schemaUserEdit.validate({
+          name: req.body.name,
+          age: req.body.age,
         });
-        const result = await userService.findByIdAndUpdate(
-          id,
-          userName,
-          userAge
-        );
+        const result = await userService.findByIdAndUpdate(id, name, age);
         res.status(200).json(result);
       } catch (error) {
         res.status(500).json(error);

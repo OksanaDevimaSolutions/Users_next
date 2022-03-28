@@ -7,8 +7,8 @@ const getOneById = async (id: number, userId: number) => {
       user_id: userId,
     },
   });
-  if (product[0]) {
-    return product[0];
+  if (product) {
+    return product;
   }
   return null;
 };

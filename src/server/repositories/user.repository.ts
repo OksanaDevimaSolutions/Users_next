@@ -2,7 +2,7 @@ import Product from "../models/Product.models";
 import User from "../models/User.models";
 
 const getOneById = async (id: number) => {
-  const user = await User.findAll({
+  const user = await User.findOne({
     where: {
       id,
     },
@@ -17,8 +17,8 @@ const getOneById = async (id: number) => {
       [Product, "id", "ASC"],
     ],
   });
-  if (user[0]) {
-    return user[0];
+  if (user) {
+    return user;
   }
 
   return null;
@@ -92,26 +92,26 @@ const getAllEmails = async () => {
   return users;
 };
 const findEmail = async (email: string) => {
-  const user = await User.findAll({
+  const user = await User.findOne({
     where: {
       email,
       isConfirmed: true,
     },
   });
-  if (user[0]) {
-    return user[0];
+  if (user) {
+    return user;
   }
 
   return null;
 };
 const findByUniqueString = async (uniqueString: string) => {
-  const user = await User.findAll({
+  const user = await User.findOne({
     where: {
       uniqueString,
     },
   });
-  if (user[0]) {
-    return user[0];
+  if (user) {
+    return user;
   }
 
   return null;

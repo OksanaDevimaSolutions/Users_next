@@ -1,12 +1,6 @@
 import React from "react";
-// import useSwr from 'swr';
-// import Link from 'next/link';
-// import fetcher from '../src/utils/fetcher';
 
 function Register() {
-  // const { data, error } = useSwr('/api/register', fetcher);
-  // if (error) return <div>Failed to load registry form</div>;
-  // if (!data) return <div>Loading...</div>;
   return (
     <div>
       <div>

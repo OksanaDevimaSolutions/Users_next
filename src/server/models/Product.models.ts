@@ -7,7 +7,6 @@ import User from "./User.models";
 const Product = sequelize.define(
   "Product",
   {
-    // Model attributes are defined here
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -23,9 +22,7 @@ const Product = sequelize.define(
       type: DataTypes.INTEGER,
       field: "user_id",
       references: {
-        // This is a reference to another model
         model: User,
-        // This is the column name of the referenced model
         key: "id",
       },
     },
