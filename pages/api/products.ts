@@ -25,11 +25,11 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
       const { title, price } =
         await validationSchema.schemaProductEdit.validate(req.body);
 
-      const { userId } = await validationSchema.schemaId.validate({
-        userId: req.user.userId,
-      });
-
-      const result = await productService.createProduct(title, price, userId);
+      const result = await productService.createProduct(
+        title,
+        price,
+        req.user.userId
+      );
 
       res.status(200).json(result);
     } catch (error) {

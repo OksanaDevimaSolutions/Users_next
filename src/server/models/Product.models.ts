@@ -4,7 +4,9 @@ import sequelize from "../database/connection";
 
 import User from "./User.models";
 
-const Product = sequelize.define(
+import type { ProductInstance } from "../types/models/product.types";
+
+const Product = sequelize.define<ProductInstance>(
   "Product",
   {
     id: {

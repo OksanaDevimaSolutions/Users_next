@@ -48,11 +48,7 @@ const findByIdAndUpdate = async (id: number, name: string, age: number) => {
       },
     }
   );
-  if (countUpdated[0] > 0) {
-    return true;
-  }
-
-  return false;
+  return countUpdated[0] > 0;
 };
 
 const findByIdAndDelete = async (id: number) => {
@@ -62,11 +58,7 @@ const findByIdAndDelete = async (id: number) => {
     },
   });
 
-  if (countDeleted > 0) {
-    return true;
-  }
-
-  return false;
+  return countDeleted > 0;
 };
 const createUser = async (
   email: string,
@@ -104,29 +96,25 @@ const findEmail = async (email: string) => {
 
   return null;
 };
-const findByUniqueString = async (uniqueString: string) => {
+const findByUniqueStringAndConfirm = async (uniqueString: string) => {
   const user = await User.findOne({
     where: {
       uniqueString,
     },
   });
   if (user) {
-    return user;
+    const countUpdated = await User.update(
+      { isConfirmed: true },
+      {
+        where: {
+          id: user.id,
+        },
+      }
+    );
+    return countUpdated[0] > 0;
   }
 
   return null;
-};
-
-const addConfirmation = async (id: number) => {
-  const countUpdated = await User.update(
-    { isConfirmed: true },
-    {
-      where: {
-        id,
-      },
-    }
-  );
-  return countUpdated[0] > 0;
 };
 
 const userRepository = {
@@ -137,8 +125,7 @@ const userRepository = {
   createUser,
   getAllEmails,
   findEmail,
-  findByUniqueString,
-  addConfirmation,
+  findByUniqueStringAndConfirm,
 };
 
 export default userRepository;

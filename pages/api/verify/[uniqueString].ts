@@ -9,16 +9,14 @@ const handler = nc<NextApiRequest, NextApiResponse>({}).get(
     try {
       const { uniqueString } = req.query;
 
-      const user = await userService.findByUniqueString(
+      const result = await userService.findByUniqueStringAndConfirm(
         uniqueString.toString()
       );
-      if (user) {
-        const result = userService.addConfirmation(user.id);
-        if (result) {
-          return res
-            .status(200)
-            .json({ message: "email confirmed. Please login" });
-        }
+
+      if (result) {
+        return res
+          .status(200)
+          .json({ message: "email confirmed. Please login" });
       }
 
       return res

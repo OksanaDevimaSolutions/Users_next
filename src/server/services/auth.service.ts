@@ -4,7 +4,7 @@ import emailService from "./email.service";
 import tokenService from "./token.service";
 import userService from "./user.service";
 
-const createUser = async (email, password, name, age) => {
+const registerUser = async (email, password, name, age) => {
   // check if user already exist
   const oldUser = await userService.findEmail(email);
   if (oldUser) {
@@ -29,7 +29,7 @@ const createUser = async (email, password, name, age) => {
   return user;
 };
 
-const authorizeUser = async (email, password) => {
+const login = async (email, password) => {
   const user = await userService.findEmail(email);
 
   if (user && (await bcrypt.compare(password, user.password))) {
@@ -43,5 +43,5 @@ const authorizeUser = async (email, password) => {
   }
 };
 
-const authService = { createUser, authorizeUser };
+const authService = { registerUser, login };
 export default authService;

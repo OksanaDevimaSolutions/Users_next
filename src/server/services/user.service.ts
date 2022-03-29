@@ -44,13 +44,9 @@ const findEmail = async (email: string) => {
   const user = await userRepo.findEmail(email);
   return user;
 };
-const findByUniqueString = async (uniqueString: string) => {
-  const user = await userRepo.findByUniqueString(uniqueString);
+const findByUniqueStringAndConfirm = async (uniqueString: string) => {
+  const user = await userRepo.findByUniqueStringAndConfirm(uniqueString);
   return user;
-};
-const addConfirmation = async (id: number) => {
-  const result = await userRepo.addConfirmation(id);
-  return result;
 };
 
 const userService = {
@@ -61,8 +57,7 @@ const userService = {
   createUser,
   getAllEmails,
   findEmail,
-  findByUniqueString,
-  addConfirmation,
+  findByUniqueStringAndConfirm,
 };
 
 export default userService;

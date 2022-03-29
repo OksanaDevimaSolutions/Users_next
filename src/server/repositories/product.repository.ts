@@ -4,7 +4,7 @@ const getOneById = async (id: number, userId: number) => {
   const product = await Product.findOne({
     where: {
       id,
-      user_id: userId,
+      userId,
     },
   });
   if (product) {
@@ -15,7 +15,7 @@ const getOneById = async (id: number, userId: number) => {
 const getAll = async (userId: number) => {
   const products = await Product.findAll({
     where: {
-      user_id: userId,
+      userId,
     },
     order: [["id", "DESC"]],
   });
@@ -33,7 +33,7 @@ const findByIdAndUpdate = async (
     {
       where: {
         id,
-        user_id: userId,
+        userId,
       },
     }
   );
@@ -43,7 +43,7 @@ const findByIdAndDelete = async (id: number, userId: number) => {
   const countDeleted = await Product.destroy({
     where: {
       id,
-      user_id: userId,
+      userId,
     },
   });
 
