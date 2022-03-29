@@ -15,13 +15,9 @@ const handler = nc<NextApiRequest, NextApiResponse>({})
 
       const user = await authService.registerUser(email, password, name, age);
 
-      if (user) {
-        return res.status(201).json({
-          message: `user ${user.id} registered! Please confirm your email to login`,
-        });
-      } else {
-        throw new Error("Something went wrong, user was not created!");
-      }
+      return res.status(201).json({
+        message: `user ${user.id} registered! Please confirm your email to login`,
+      });
     } catch (err) {
       return res.status(500).json(err.message);
     }
