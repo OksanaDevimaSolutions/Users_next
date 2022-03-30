@@ -5,12 +5,8 @@ const getOneById = async (id: number) => {
   return user;
 };
 const getAll = async () => {
-  try {
-    const result = await userRepo.getAll();
-    return result;
-  } catch (err) {
-    return `Can't load products error:\n ${err.message}`;
-  }
+  const result = await userRepo.getAll();
+  return result;
 };
 const findByIdAndUpdate = async (id: number, name: string, age: number) => {
   const result = await userRepo.findByIdAndUpdate(id, name, age);
