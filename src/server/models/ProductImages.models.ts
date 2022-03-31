@@ -28,7 +28,7 @@ const ProductImages = sequelize.define<ProductImagesInstance>(
   },
   {
     // Other model options go here
-    tableName: "products",
+    tableName: "productImages",
     timestamps: false,
   }
 );
