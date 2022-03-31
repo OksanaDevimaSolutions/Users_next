@@ -15,7 +15,9 @@ export const config = {
 const handler = nc<NextApiUploadMultyRequest, NextApiResponse>({})
   .get(async (req, res) => {
     try {
-      const getAllproductImages = await productImagesService.getAll(req.query);
+      const getAllproductImages = await productImagesService.getAll(
+        req.query.productId
+      );
 
       res.status(200).json(getAllproductImages);
     } catch (error) {
@@ -27,12 +29,12 @@ const handler = nc<NextApiUploadMultyRequest, NextApiResponse>({})
     try {
       req.files.forEach(async (element) => {
         await productImagesService.createProductImage(
-          req.query,
+          req.query.productId,
           element.filename
         );
       });
 
-      res.status(200).json("imageId");
+      res.status(200).json("Files upploaded succesfully");
     } catch (error) {
       res.status(500).json(error);
     }

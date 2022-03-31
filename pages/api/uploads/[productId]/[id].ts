@@ -17,11 +17,11 @@ const handler = nc<NextApiRequest, NextApiResponse>({})
     try {
       console.log(req.query);
 
-      //   const getAllproductImages = await productImagesService.getOneById(
-      //     req.query
-      //   );
+      const getAllproductImages = await productImagesService.getOneById(
+        req.query.id
+      );
 
-      //   res.status(200).json(getAllproductImages);
+      res.status(200).json(getAllproductImages);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -31,7 +31,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({})
     try {
       if (req.file.filename) {
         const imageId = await productImagesService.findByIdAndUpdate(
-          req.query,
+          req.query.id,
           req.file.filename
         );
 
@@ -45,10 +45,8 @@ const handler = nc<NextApiRequest, NextApiResponse>({})
   })
   .delete(async (req, res) => {
     try {
-      // console.log(req);
-
       //   const { id } = await validationSchema.schemaId.validate(req.query);
-      const id = req.query;
+      const id = req.query.id;
       const result = await productImagesService.findByIdAndDelete(id);
       res.status(200).json(result);
     } catch (error) {

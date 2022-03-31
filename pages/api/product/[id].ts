@@ -8,7 +8,7 @@ import productImagesService from "../../../src/server/services/productImages.ser
 import validationSchema from "../../../src/server/validations/products.validation";
 
 import type { NextApiAuthRequest } from "../../../src/server/types/auth.types";
-import type { NextApiUploadRequest } from "../../../src/server/types/upload.types";
+import type { NextApiUploadMultyRequest } from "../../../src/server/types/upload.types";
 import type { NextApiResponse } from "next";
 
 export const config = {
@@ -33,6 +33,7 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
       return res.status(500).json(error);
     }
   })
+  // не стирає, можливо треба змінити властивості alowNull в моделі
   .delete(async (req, res) => {
     try {
       const { id } = await validationSchema.schemaId.validate(req.query);
@@ -45,25 +46,26 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
       res.status(500).json(error);
     }
   })
-  .use(multerMiddleware.single("filedata"))
-  .put(async (req: NextApiUploadRequest, res) => {
+  .use(multerMiddleware.array("filedatas"))
+  .put(async (req: NextApiUploadMultyRequest, res) => {
     try {
-      const { productId } = await validationSchema.schemaId.validate(req.query);
+      const { id } = await validationSchema.schemaId.validate(req.query);
       const { title, price } =
         await validationSchema.schemaProductEdit.validate(req.body);
 
       const productToUpdate = await productService.findByIdAndUpdate(
-        productId,
+        id,
         title,
         price,
         req.user.userId
       );
-      if (req.file) {
-        const imageId = await productImagesService.createProductImage(
-          productId,
-          req.file.filename
-        );
-        res.status(200).json(imageId);
+
+      if (req.files) {
+        req.files.forEach(async (element) => {
+          await productImagesService.createProductImage(id, element.filename);
+        });
+
+        return res.status(200).json("Products updated succesfully");
       }
       res.status(200).json(productToUpdate);
     } catch (error) {
