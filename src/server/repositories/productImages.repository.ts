@@ -6,10 +6,7 @@ const getOneById = async (id: number) => {
       id,
     },
   });
-  if (image) {
-    return image;
-  }
-  return null;
+  return image;
 };
 const getAll = async (productId: number) => {
   const images = await ProductImages.findAll({

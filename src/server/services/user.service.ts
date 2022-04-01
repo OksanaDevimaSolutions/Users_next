@@ -1,11 +1,35 @@
 import userRepo from "../repositories/user.repository";
 
+const urlImagePathOne = async (userObj) => {
+  await userObj.Products.map((productObjs) => {
+    productObjs.ProductImages.map((productImageObj) => {
+      productImageObj.image = "/uploads/" + productImageObj.image;
+    });
+  });
+  return userObj;
+};
+const urlImagePathAll = async (userObjs) => {
+  await userObjs.map((user) => {
+    user.Products.map((product) => {
+      product.ProductImages.map((productImageObj) => {
+        productImageObj.image = "/uploads/" + productImageObj.image;
+      });
+    });
+  });
+  return userObjs;
+};
 const getOneById = async (id: number) => {
   const user = await userRepo.getOneById(id);
+  if (user) {
+    return urlImagePathOne(user);
+  }
   return user;
 };
 const getAll = async () => {
   const result = await userRepo.getAll();
+  if (result) {
+    return urlImagePathAll(result);
+  }
   return result;
 };
 const findByIdAndUpdate = async (id: number, name: string, age: number) => {

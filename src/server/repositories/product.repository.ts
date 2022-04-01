@@ -56,6 +56,11 @@ const findByIdAndUpdate = async (
   return countUpdated[0];
 };
 const findByIdAndDelete = async (id: number, userId: number) => {
+  await ProductImages.destroy({
+    where: {
+      productId: id,
+    },
+  });
   const countDeleted = await Product.destroy({
     where: {
       id,

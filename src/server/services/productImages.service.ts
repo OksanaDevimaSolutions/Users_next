@@ -1,13 +1,21 @@
 import productImagesRepo from "../repositories/productImages.repository";
 
 const getOneById = async (id) => {
-  const product = await productImagesRepo.getOneById(id);
-  return product;
+  const imageObj = await productImagesRepo.getOneById(id);
+  if (imageObj) {
+    imageObj.image = "/uploads/" + imageObj.image;
+    return imageObj;
+  }
+  return null;
 };
 const getAll = async (productId) => {
-  const result = await productImagesRepo.getAll(productId);
-
-  return result;
+  const imagesObjs = await productImagesRepo.getAll(productId);
+  if (imagesObjs) {
+    imagesObjs.map((item) => {
+      item.image = "/uploads/" + item.image;
+    });
+  }
+  return imagesObjs;
 };
 const findByIdAndUpdate = (id, image) => {
   const result = productImagesRepo.findByIdAndUpdate(id, image);

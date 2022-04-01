@@ -18,7 +18,7 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
         const result = await userService.getOneById(id);
         res.status(200).json(result);
       } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(error.message);
       }
     } else {
       res.status(404).json({ message: "You can only view your own profile" });

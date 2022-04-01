@@ -1,37 +1,33 @@
 import productRepo from "../repositories/product.repository";
 
-import type { ProductImagesInstance } from "../types/models/productImages.types";
-
-const urlImagePathOne = async (product) => {
-  const productEdited = product.map((item) => {
-    item.ProductImages.image = "http://localhost:3000/uploads/" + item.image;
+const urlImagePathOne = async (productObj) => {
+  await productObj.ProductImages.map((productImageObj) => {
+    productImageObj.image = "/uploads/" + productImageObj.image;
   });
-
-  return productEdited;
+  return productObj;
 };
 const getOneById = async (id, userId) => {
   const product = await productRepo.getOneById(id, userId);
+  if (product) {
+    return urlImagePathOne(product);
+  }
   return product;
-  //return urlImagePathOne(product);
 };
-const urlImagePathAll = async (products) => {
-  console.log("hello");
-
-  const productsEdited = products.map(async (product) => {
-    console.log(product);
-
-    await product.map((item: ProductImagesInstance) => {
-      console.log(item);
-
-      item.image = "http://localhost:3000/uploads/" + item.image;
+const urlImagePathAll = async (productObjs) => {
+  await productObjs.map((product) => {
+    product.ProductImages.map((productImageObj) => {
+      productImageObj.image = "/uploads/" + productImageObj.image;
     });
   });
-  return productsEdited;
+  return productObjs;
 };
+
 const getAll = async (userId) => {
-  const result = await productRepo.getAll(userId);
-  return result;
-  // return urlImagePathAll(result);
+  const productObjs = await productRepo.getAll(userId);
+  if (productObjs) {
+    return urlImagePathAll(productObjs);
+  }
+  return productObjs;
 };
 const findByIdAndUpdate = (id, title, price, userId) => {
   const result = productRepo.findByIdAndUpdate(id, title, price, userId);

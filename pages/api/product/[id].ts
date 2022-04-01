@@ -46,7 +46,7 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
       res.status(500).json(error);
     }
   })
-  .use(multerMiddleware.array("filedatas"))
+  .use(multerMiddleware.array("filedata"))
   .put(async (req: NextApiUploadMultyRequest, res) => {
     try {
       const { id } = await validationSchema.schemaId.validate(req.query);

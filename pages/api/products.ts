@@ -45,7 +45,7 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
           product.id,
           req.file.filename
         );
-        res.status(200).json(imageId);
+        return res.status(200).json(imageId);
       }
 
       res.status(200).json(product);

@@ -24,7 +24,7 @@ const handler = nc<NextApiUploadMultyRequest, NextApiResponse>({})
       res.status(500).json(error);
     }
   })
-  .use(multerMiddleware.array("filesdata"))
+  .use(multerMiddleware.array("filedata"))
   .post(async (req, res) => {
     try {
       req.files.forEach(async (element) => {

@@ -1,4 +1,5 @@
 import Product from "../models/Product.models";
+import ProductImages from "../models/ProductImages.models";
 import User from "../models/User.models";
 
 const getOneById = async (id: number) => {
@@ -9,7 +10,13 @@ const getOneById = async (id: number) => {
     attributes: ["id", "email", "name", "age"],
     include: {
       model: Product,
+      as: "Products",
       attributes: ["id", "title", "price"],
+      include: {
+        model: ProductImages,
+        as: "ProductImages",
+        attributes: ["id", "image"],
+      },
     },
     order: [
       ["id", "DESC"],
@@ -21,14 +28,20 @@ const getOneById = async (id: number) => {
     return user;
   }
 
-  return null;
+  throw new Error("no user found");
 };
 const getAll = async () => {
   const users = await User.findAll({
     attributes: ["id", "email", "name", "age"],
     include: {
       model: Product,
+      as: "Products",
       attributes: ["id", "title", "price"],
+      include: {
+        model: ProductImages,
+        as: "ProductImages",
+        attributes: ["id", "image"],
+      },
     },
     order: [
       ["id", "DESC"],
