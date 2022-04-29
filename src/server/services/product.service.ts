@@ -1,13 +1,33 @@
 import productRepo from "../repositories/product.repository";
 
+const urlImagePathOne = async (productObj) => {
+  await productObj.ProductImages.map((productImageObj) => {
+    productImageObj.image = "/uploads/" + productImageObj.image;
+  });
+  return productObj;
+};
 const getOneById = async (id, userId) => {
   const product = await productRepo.getOneById(id, userId);
+  if (product) {
+    return urlImagePathOne(product);
+  }
   return product;
 };
-const getAll = async (userId) => {
-  const result = await productRepo.getAll(userId);
+const urlImagePathAll = async (productObjs) => {
+  await productObjs.map((product) => {
+    product.ProductImages.map((productImageObj) => {
+      productImageObj.image = "/uploads/" + productImageObj.image;
+    });
+  });
+  return productObjs;
+};
 
-  return result;
+const getAll = async (userId) => {
+  const productObjs = await productRepo.getAll(userId);
+  if (productObjs) {
+    return urlImagePathAll(productObjs);
+  }
+  return productObjs;
 };
 const findByIdAndUpdate = (id, title, price, userId) => {
   const result = productRepo.findByIdAndUpdate(id, title, price, userId);
@@ -18,13 +38,10 @@ const findByIdAndDelete = async (id, userId) => {
   return result;
 };
 const createProduct = async (title, price, userId) => {
-  try {
-    const productId = await productRepo.createProduct(title, price, userId);
-    return productId;
-  } catch (err) {
-    return `Can't create product:\n "${err.message}"`;
-  }
+  const product = await productRepo.createProduct(title, price, userId);
+  return product;
 };
+
 const productService = {
   getOneById,
   getAll,

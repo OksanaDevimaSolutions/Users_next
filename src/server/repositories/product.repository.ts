@@ -1,4 +1,5 @@
 import Product from "../models/Product.models";
+import ProductImages from "../models/ProductImages.models";
 
 const getOneById = async (id: number, userId: number) => {
   const product = await Product.findOne({
@@ -6,6 +7,14 @@ const getOneById = async (id: number, userId: number) => {
       id,
       userId,
     },
+    include: {
+      model: ProductImages,
+      attributes: ["id", "image"],
+    },
+    order: [
+      ["id", "DESC"],
+      [ProductImages, "id", "ASC"],
+    ],
   });
   if (product) {
     return product;
@@ -17,7 +26,14 @@ const getAll = async (userId: number) => {
     where: {
       userId,
     },
-    order: [["id", "DESC"]],
+    include: {
+      model: ProductImages,
+      attributes: ["id", "image"],
+    },
+    order: [
+      ["id", "DESC"],
+      [ProductImages, "id", "ASC"],
+    ],
   });
   return products;
 };
@@ -40,6 +56,11 @@ const findByIdAndUpdate = async (
   return countUpdated[0];
 };
 const findByIdAndDelete = async (id: number, userId: number) => {
+  await ProductImages.destroy({
+    where: {
+      productId: id,
+    },
+  });
   const countDeleted = await Product.destroy({
     where: {
       id,

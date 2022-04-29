@@ -2,11 +2,20 @@ import nc from "next-connect";
 
 import authMiddleware from "../../src/server/middlewares/auth.middleware";
 import loggerMiddleware from "../../src/server/middlewares/logger.middleware";
+import multerMiddleware from "../../src/server/middlewares/multer.middleware";
 import productService from "../../src/server/services/product.service";
+import productImagesService from "../../src/server/services/productImages.service";
 import validationSchema from "../../src/server/validations/products.validation";
 
 import type { NextApiAuthRequest } from "../../src/server/types/auth.types";
+import type { NextApiUploadRequest } from "../../src/server/types/upload.types";
 import type { NextApiResponse } from "next";
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const handler = nc<NextApiAuthRequest, NextApiResponse>({})
   .use(loggerMiddleware)
@@ -20,18 +29,26 @@ const handler = nc<NextApiAuthRequest, NextApiResponse>({})
       res.status(500).json(error);
     }
   })
-  .post(async (req, res) => {
+  .use(multerMiddleware.single("filedata"))
+  .post(async (req: NextApiUploadRequest, res) => {
     try {
       const { title, price } =
         await validationSchema.schemaProductEdit.validate(req.body);
 
-      const result = await productService.createProduct(
+      const product = await productService.createProduct(
         title,
         price,
         req.user.userId
       );
+      if (req.file) {
+        const imageId = await productImagesService.createProductImage(
+          product.id,
+          req.file.filename
+        );
+        return res.status(200).json(imageId);
+      }
 
-      res.status(200).json(result);
+      res.status(200).json(product);
     } catch (error) {
       res.status(500).json(error);
     }
